@@ -1,0 +1,19 @@
+/* styles.css - complementos */
+@layer utilities {
+    .loader {
+        border-top-color: #00BFFF;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+/* small visual tweaks */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
