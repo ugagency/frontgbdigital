@@ -1,5 +1,5 @@
 // script.js - lógica do AI Look
-const webhookUrl = 'https://automacoes-n8n.infrassys.com/webhook-test/gbdigital';
+const webhookUrl = 'https://automacoes-n8n.infrassys.com/webhook/gbdigital';
 
 const inputMain = document.getElementById('input-main');
 const inputRef = document.getElementById('input-ref');
