@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -25,8 +26,9 @@
     }
   </script>
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="bg-bg text-text font-sans min-h-screen antialiased">
 
   <div class="max-w-3xl mx-auto p-6">
@@ -42,9 +44,11 @@
         <h2 class="font-semibold mb-2">📸 Sua foto base <span class="text-xs text-gray-400">(obrigatório)</span></h2>
         <div id="dropzone-main" class="border-dashed border-2 border-gray-200 rounded-xl p-6 flex items-center gap-4">
           <div class="w-28 h-28 bg-gray-100 rounded overflow-hidden flex items-center justify-center">
-            <img id="preview-main" src="" alt="" class="object-cover w-full h-full hidden"/>
-            <svg id="icon-main" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M16 3l-4 4-4-4" />
+            <img id="preview-main" src="" alt="" class="object-cover w-full h-full hidden" />
+            <svg id="icon-main" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M16 3l-4 4-4-4" />
             </svg>
           </div>
 
@@ -69,9 +73,11 @@
         <h2 class="font-semibold mb-2">👕 Foto da roupa / referência (opcional)</h2>
         <div id="dropzone-ref" class="border-dashed border-2 border-gray-200 rounded-xl p-6 flex items-center gap-4">
           <div class="w-20 h-20 bg-gray-100 rounded overflow-hidden flex items-center justify-center">
-            <img id="preview-ref" src="" alt="" class="object-cover w-full h-full hidden"/>
-            <svg id="icon-ref" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M16 3l-4 4-4-4" />
+            <img id="preview-ref" src="" alt="" class="object-cover w-full h-full hidden" />
+            <svg id="icon-ref" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M16 3l-4 4-4-4" />
             </svg>
           </div>
 
@@ -94,7 +100,9 @@
       <!-- Prompt -->
       <section class="bg-white rounded-xl shadow p-5">
         <h2 class="font-semibold mb-2">✍️ O que você deseja gerar?</h2>
-        <textarea id="prompt" rows="4" placeholder='Ex: "Quero uma versão minha usando um vestido azul elegante para festa"' class="w-full border rounded-xl p-3 text-sm"></textarea>
+        <textarea id="prompt" rows="4"
+          placeholder='Ex: "Quero uma versão minha usando um vestido azul elegante para festa"'
+          class="w-full border rounded-xl p-3 text-sm"></textarea>
         <div class="mt-3 text-xs text-gray-500">
           Sugestões: gerar look elegante, mudar cor da camisa, combinar minha foto com a peça enviada.
         </div>
@@ -128,7 +136,8 @@
 
       <!-- Actions -->
       <div class="flex gap-3 items-center">
-        <button id="generateBtn" class="flex-1 px-6 py-3 bg-primary text-white rounded-xl font-medium disabled:opacity-60" disabled>
+        <button id="generateBtn"
+          class="flex-1 px-6 py-3 bg-primary text-white rounded-xl font-medium disabled:opacity-60" disabled>
           🎨 Gerar imagem com IA
         </button>
 
@@ -142,7 +151,8 @@
           <img id="resultImage" src="" alt="Resultado" class="w-full rounded-xl object-cover max-h-[600px]" />
         </div>
         <div class="flex gap-3">
-          <a id="downloadBtn" class="inline-flex items-center px-4 py-2 bg-accent text-black rounded-xl" download>⬇ Baixar imagem</a>
+          <a id="downloadBtn" class="inline-flex items-center px-4 py-2 bg-accent text-black rounded-xl" download>⬇
+            Baixar imagem</a>
           <button id="regenerateBtn" class="px-4 py-2 bg-primary text-white rounded-xl">🔁 Gerar novamente</button>
         </div>
       </section>
@@ -164,4 +174,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

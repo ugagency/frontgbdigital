@@ -1,5 +1,5 @@
 // script.js - lógica do AI Look
-const webhookUrl = 'https://automacoes-n8n.infrassys.com/webhook/gbdigital';
+const webhookUrl = 'https://automacoes-n8n.infrassys.com/webhook-test/gbdigital';
 
 const inputMain = document.getElementById('input-main');
 const inputRef = document.getElementById('input-ref');
@@ -129,7 +129,7 @@ document.getElementById('dropzone-ref').addEventListener('drop', e => {
 async function sendGenerate() {
     const mode = document.querySelector('input[name="mode"]:checked').value;
     const prompt = promptEl.value || '';
-    // Validate
+
     if (!fileMain && mode !== 'from_scratch') {
         alert('Envie sua foto base ou selecione "Criar look do zero".');
         return;
@@ -151,35 +151,34 @@ async function sendGenerate() {
         });
 
         if (!res.ok) {
-            const txt = await res.text();
-            throw new Error('Erro no servidor: ' + res.status + ' ' + txt);
-        }
-        const data = await res.json();
-
-        // expect data.image as URL or base64 data URI
-        if (!data || (!data.image && !data.image_base64)) {
-            throw new Error('Resposta inválida da API.');
+            const errText = await res.text();
+            throw new Error("Erro no servidor: " + res.status + " - " + errText);
         }
 
-        let imageUrl = data.image;
-        if (!imageUrl && data.image_base64) {
-            imageUrl = `data:image/png;base64,${data.image_base64}`;
+        // AGORA A RESPOSTA É UM BLOB (binário)
+        const blob = await res.blob();
+
+        if (!blob || blob.size === 0) {
+            throw new Error("O N8N retornou um arquivo vazio.");
         }
 
-        // show result
+        // Criar URL temporária da imagem
+        const imageUrl = URL.createObjectURL(blob);
+
+        // Mostrar a imagem
         resultImage.src = imageUrl;
-        downloadBtn.href = imageUrl;
-        downloadBtn.setAttribute('download', 'ai-look.png');
         resultSection.classList.remove('hidden');
-        // scroll to result
         resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Botão de download
+        downloadBtn.href = imageUrl;
+        downloadBtn.setAttribute("download", "ai-look.png");
 
     } catch (err) {
         console.error(err);
-        alert('Erro ao gerar imagem: ' + (err.message || err));
+        alert("Erro ao gerar imagem: " + (err.message || err));
     } finally {
         loadingOverlay.classList.add('hidden');
-        updateGenerateState();
         generateBtn.disabled = false;
     }
 }
