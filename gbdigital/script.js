@@ -1,6 +1,6 @@
 // script.js - lógica do AI Look
 const webhookUrl = 'https://automacoes-n8n.infrassys.com/webhook/gbdigital';
-const chatWebhookUrl = 'https://automacoes-n8n.infrassys.com/webhook-test/webchat';
+const chatWebhookUrl = 'https://automacoes-n8n.infrassys.com/webhook/webchat';
 
 const inputMain = document.getElementById('input-main');
 const inputRef = document.getElementById('input-ref');
