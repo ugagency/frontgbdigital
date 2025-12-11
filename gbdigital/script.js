@@ -1,5 +1,6 @@
 // script.js - lógica do AI Look
 const webhookUrl = 'https://automacoes-n8n.infrassys.com/webhook/gbdigital';
+const chatWebhookUrl = 'https://automacoes-n8n.infrassys.com/webhook-test/webchat';
 
 const inputMain = document.getElementById('input-main');
 const inputRef = document.getElementById('input-ref');
@@ -185,3 +186,134 @@ async function sendGenerate() {
 
 generateBtn.addEventListener('click', sendGenerate);
 regenerateBtn.addEventListener('click', sendGenerate);
+
+
+// --- CHAT WIDGET LOGIC ---
+
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+const sendChatBtn = document.getElementById('send-chat-btn');
+const chatFileInput = document.getElementById('chat-file-input');
+const chatImagePreviewContainer = document.getElementById('chat-image-preview-container');
+const chatImagePreview = document.getElementById('chat-image-preview');
+const removeChatImageBtn = document.getElementById('remove-chat-image');
+
+let chatFile = null;
+
+// Chat Image Handling
+chatFileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        chatFile = file;
+        const url = URL.createObjectURL(file);
+        chatImagePreview.src = url;
+        chatImagePreviewContainer.classList.remove('hidden');
+    }
+});
+
+removeChatImageBtn.addEventListener('click', () => {
+    chatFile = null;
+    chatImagePreview.src = '';
+    chatImagePreviewContainer.classList.add('hidden');
+    chatFileInput.value = '';
+});
+
+// Append Message to UI
+function appendMessage(text, isUser = false, imageUrl = null) {
+    const div = document.createElement('div');
+    div.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+
+    let contentHtml = '';
+
+    if (imageUrl) {
+        contentHtml += `<img src="${imageUrl}" class="max-w-[150px] rounded-lg mb-1 border block ml-auto">`;
+    }
+
+    if (text) {
+        contentHtml += `<div class="${isUser ? 'bg-primary text-white rounded-tr-none' : 'bg-white border text-gray-800 rounded-tl-none'} rounded-2xl py-2 px-3 text-sm shadow-sm max-w-[85%] break-words">${text}</div>`;
+    }
+
+    div.innerHTML = contentHtml;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Send Message
+async function sendChatMessage() {
+    const text = chatInput.value.trim();
+    if (!text && !chatFile) return;
+
+    // Capture current state
+    const currentText = text;
+    const currentFile = chatFile;
+
+    // UI Update
+    let userImageUrl = null;
+    if (currentFile) {
+        userImageUrl = URL.createObjectURL(currentFile);
+    }
+    appendMessage(currentText, true, userImageUrl);
+
+    // Clear Input immediately
+    chatInput.value = '';
+    chatFile = null;
+    chatImagePreviewContainer.classList.add('hidden');
+    chatFileInput.value = '';
+
+    // Loading State
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'chat-loading';
+    loadingDiv.className = 'flex justify-start';
+    loadingDiv.innerHTML = `
+        <div class="bg-white border text-gray-800 rounded-tl-none rounded-2xl py-2 px-3 text-sm shadow-sm flex items-center gap-1">
+            <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
+            <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
+            <span class="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+        </div>
+    `;
+    chatMessages.appendChild(loadingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Prepare Data
+    const fd = new FormData();
+    fd.append('message', currentText);
+    if (currentFile) {
+        fd.append('image', currentFile, currentFile.name);
+        fd.append('has_image', 'true');
+    } else {
+        fd.append('has_image', 'false');
+    }
+
+    try {
+        const res = await fetch(chatWebhookUrl, {
+            method: 'POST',
+            body: fd
+        });
+
+        if (!res.ok) {
+            throw new Error("Erro no servidor");
+        }
+
+        const data = await res.json();
+
+        // Remove loading
+        const loadingEl = document.getElementById('chat-loading');
+        if (loadingEl) loadingEl.remove();
+
+        // Show response
+        // Assuming data.text or data.message contains the bot reply
+        const botReply = data.text || data.message || data.output || "Recebido!";
+        appendMessage(botReply, false);
+
+    } catch (err) {
+        console.error(err);
+        const loadingEl = document.getElementById('chat-loading');
+        if (loadingEl) loadingEl.remove();
+        appendMessage("Desculpe, ocorreu um erro ao enviar sua mensagem.", false);
+    }
+}
+
+sendChatBtn.addEventListener('click', sendChatMessage);
+chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendChatMessage();
+});
