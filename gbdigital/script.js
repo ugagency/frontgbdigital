@@ -41,7 +41,23 @@ function handleFileInput(file, previewEl, iconEl, nameEl, removeBtn, setter) {
     const url = URL.createObjectURL(file);
     previewEl.src = url;
     previewEl.classList.remove('hidden');
-    iconEl.classList.add('hidden');
+
+    // UI Update específica para o novo design
+    const placeholder = document.getElementById(previewEl.id.replace('preview', 'upload-placeholder'));
+    if (placeholder) placeholder.classList.add('hidden');
+
+    // Efeito Laser Scan (Apenas para foto principal)
+    if (previewEl.id === 'preview-main') {
+        const scanLine = document.getElementById('scan-main');
+        if (scanLine) scanLine.style.display = 'block';
+
+        // Desliga o scan após 3 segundos (simulando análise)
+        setTimeout(() => {
+            if (scanLine) scanLine.style.display = 'none';
+        }, 3000);
+    }
+
+    if (iconEl) iconEl.classList.add('hidden');
     nameEl.textContent = file.name;
     removeBtn.classList.remove('hidden');
     setter(file);
@@ -66,8 +82,16 @@ removeMain.addEventListener('click', () => {
     fileMain = null;
     previewMain.src = '';
     previewMain.classList.add('hidden');
-    iconMain.classList.remove('hidden');
-    fileMainName.textContent = 'Arraste sua foto aqui ou selecione um arquivo.';
+
+    // Mostrar placeholder de volta
+    const placeholder = document.getElementById('upload-placeholder-main');
+    if (placeholder) placeholder.classList.remove('hidden');
+
+    // Esconder Scan
+    const scanLine = document.getElementById('scan-main');
+    if (scanLine) scanLine.style.display = 'none';
+
+    fileMainName.textContent = 'Arraste sua foto aqui ou selecione um arquivo.'; // Texto padrão de fallback
     removeMain.classList.add('hidden');
     inputMain.value = '';
     updateGenerateState();

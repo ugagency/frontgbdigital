@@ -1,19 +1,124 @@
-/* styles.css - complementos */
-@layer utilities {
-    .loader {
-        border-top-color: #00BFFF;
-        animation: spin 1s linear infinite;
+/* style.css - Design System Editorial */
+
+/* 1. Textura de Fundo (Papel de Revista) */
+body {
+    /* Cria um padrão de pontos sutil estilo "grid de design" */
+    background-image: radial-gradient(#E5E5E5 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-attachment: fixed;
+    /* O fundo não se move ao rolar */
+}
+
+/* 2. Utilitários de Interface */
+
+/* Efeito de Vidro (Fosco) */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Remove a barra de rolagem (mantendo a funcionalidade) para o Chat ficar limpo */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* 3. Animação de Scan (Laser Fashion) 
+   Aparece quando o usuário sobe a foto */
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #C78D75;
+    /* Cor Terracota */
+    box-shadow: 0 0 15px #C78D75, 0 0 5px rgba(255, 255, 255, 0.5);
+    animation: scan 2s infinite linear;
+    display: none;
+    /* Inicia oculto, ativado via JS */
+    z-index: 20;
+}
+
+@keyframes scan {
+    0% {
+        top: 0%;
+        opacity: 0;
     }
 
-    @keyframes spin {
-        to {
-            transform: rotate(360deg);
-        }
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
     }
 }
 
-/* small visual tweaks */
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/* 4. Loader Elegante (Círculo Minimalista) 
+   Substituto do loader padrão do navegador */
+.fashion-loader {
+    width: 48px;
+    height: 48px;
+    border: 3px solid #E5E5E5;
+    /* Cinza claro */
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.fashion-loader::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-bottom-color: #C78D75;
+    /* Acento Terracota */
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 5. Animações de Entrada (Fade In suave) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
 }
