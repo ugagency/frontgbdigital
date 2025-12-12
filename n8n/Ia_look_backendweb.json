@@ -1,0 +1,861 @@
+{
+  "name": "Ia_look_backendweb",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Send Image to Nano Banana API (Defapi.org)\n4. **Send Image Generation Request to Defapi.org API** (HTTP Request) - Submits generation request for each image\n5. **Wait for Image Processing Completion** (Wait Node) - Waits 10 seconds before checking status\n6. **Obtain the generated status** (HTTP Request) - Polls API for completion status\n7. **Check if Image Generation is Complete** (IF Node) - Checks if status is not \"pending\"",
+        "height": 288,
+        "width": 880
+      },
+      "id": "57b4c47a-b2ce-433d-946e-4b202d0d2f45",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        544,
+        -720
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "gbdigital",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "GET, POST, OPTIONS"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -464,
+        480
+      ],
+      "id": "ca09faa4-e278-4296-bd4c-bffc8a700757",
+      "name": "Webhook",
+      "webhookId": "5acc99a4-6eb4-445e-b76f-9f98514a90aa"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "67037996-db03-457c-9e3f-833f48cf0e53",
+              "name": "mode",
+              "value": "={{ $json.body.mode }}",
+              "type": "string"
+            },
+            {
+              "id": "7c219909-b831-48e8-b475-42ddbe0203d4",
+              "name": "prompt_final",
+              "value": "={{ $json.body.prompt }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -16,
+        -64
+      ],
+      "id": "7b47ac45-bfd0-498d-afd9-138a08678e55",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "edit",
+        "prompt": "=Você deve vestir a pessoa da imagem BASE \"{{ $binary.image_base }}\" usando exatamente a roupa presente na imagem REFERÊNCIA\"{{$binary.image_reference}}\".\n\nRegras obrigatórias:\n1. Mantenha 100% as características físicas reais da pessoa da imagem base:\n   - rosto\n   - corpo\n   - peso\n   - tom de pele\n   - proporções corporais\n   - formato do corpo\n   - cabelo (se visível)\n   - postura e pose\n2. Substitua SOMENTE a roupa, sem alterar a pessoa.\n3. Aplique a roupa da imagem de referência de forma natural, realista e perfeitamente ajustada ao corpo.\n4. Preserve a identidade da pessoa original.\n5. Respeite iluminação, sombras e profundidade da imagem base.\n6. Não redesenhe a pessoa inteira. Apenas faça a troca da roupa.\n7. Mantenha a estética ULTRA-REALISTA.\n8. Recrie fielmente:\n   - cores\n   - textura\n   - material\n   - marca\n   - modelagem\n   - caimento\n   da roupa da imagem de referência.\n\nObjetivo final:\nGerar uma imagem da pessoa da foto base vestindo exatamente a roupa da imagem referência, com acabamento profissional e aparência natural.\n\nDescrição extra fornecida pelo usuário (estilo desejado):\n\"{{ $json.prompt_final }}\"\n\n\n\n",
+        "images": {
+          "values": [
+            {
+              "binaryPropertyName": "image_base"
+            },
+            {
+              "binaryPropertyName": "image_reference"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        944,
+        -176
+      ],
+      "id": "2ba21018-8c04-43bf-8dba-5bcac429c3bb",
+      "name": "Edit an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Tf06ftYu7cj0QewA",
+          "name": "try2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "edit",
+        "prompt": "=Você deve editar APENAS a roupa presente na imagem BASE \"{{ $binary.image_base }}\" ou na imagem de referência  \"{{ $binary.image_reference }}\".\n\nRegras obrigatórias:\n1. Preserve o formato, modelagem, proporções e estilo geral da peça original.\n2. Mantenha a roupa como o único elemento de foco — ignore corpo, fundo ou elementos externos.\n3. Aplique a modificação solicitada pelo usuário de forma realista:\n   - cores\n   - textura\n   - material\n   - detalhes\n   - comprimento\n   - estampa\n4. Não altere o design principal da roupa, apenas o que for explicitamente pedido.\n5. Não gere um novo modelo de peça. A estrutura da roupa original deve permanecer igual.\n6. Não adicione corpo humano ou manequins se eles não existirem.\n7. Mantenha aparência fotográfica e ultra-realista.\n8. Deixe o fundo da imagem simples, limpo ou uniformizado se necessário.\n9. Garanta que a peça continue pronta para ser aplicada no corpo da imagem base posteriormente.\n\nInstrução do usuário sobre a modificação desejada:\n\"{{ $json.prompt_final }}\"\n",
+        "images": {
+          "values": [
+            {
+              "binaryPropertyName": "image_base"
+            },
+            {
+              "binaryPropertyName": "image_reference"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        944,
+        32
+      ],
+      "id": "860fe2b1-a36f-4e94-8e54-d459e664adad",
+      "name": "Edit an image1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Tf06ftYu7cj0QewA",
+          "name": "try2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.mode }}",
+                    "rightValue": "generate",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "a1e1d4c8-8ae3-4b5e-bd8f-ff459e56b4c9"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5efa7c24-65ac-46f1-920b-2969d6dfdff0",
+                    "leftValue": "={{ $json.mode }}",
+                    "rightValue": "combine",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8c4b73f5-fddb-446b-97cc-604ec0224936",
+                    "leftValue": "={{ $json.mode }}",
+                    "rightValue": "edit",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c29e4d68-6fff-4d24-a379-9c7ccf7b5df9",
+                    "leftValue": "={{ $json.mode }}",
+                    "rightValue": "from_scratch",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        160,
+        -112
+      ],
+      "id": "9988c7cc-4c6f-4ab4-a651-008157ece9ed",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "edit",
+        "prompt": "=Transforme somente as roupas da pessoa na imagem base, substituindo o look atual por um novo look descrito pelo usuário.\n\nRegras obrigatórias:\n1. Preserve completamente:\n   - rosto\n   - corpo\n   - idade aparente\n   - tom de pele\n   - formato do corpo\n   - pose e proporções\n   - identidade visual da pessoa\n2. Não altere a fisionomia, não afine corpo, não mude cabelo, não mude altura, não mude expressão.\n3. Aplique o novo look exatamente conforme descrito em:\n   \"{{ $('Edit Fields1').item.json.prompt_final }}\"\n4. O novo look deve parecer uma roupa real, com tecido real, caimento natural e interação real com o corpo.\n5. Cores e estilos devem ser realistas e bem integrados à luz original da foto.\n6. Não gere novos objetos, pessoas ou elementos desnecessários.\n7. O fundo deve permanecer igual ou ser suavemente limpo, mas nunca totalmente substituído.\n8. Mantenha estética fotográfica ultrarrealista; nada de aparência de desenho ou renderização 3D.\n9. Ajuste sombras, dobras e volumes da roupa para se moldarem ao corpo real da pessoa.\n\nObjetivo final:\nGerar a mesma pessoa da imagem base, mas vestindo um novo look completo conforme o usuário pediu.",
+        "images": {
+          "values": [
+            {
+              "binaryPropertyName": "image_base"
+            },
+            {
+              "binaryPropertyName": "image_reference"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        928,
+        -384
+      ],
+      "id": "a839819e-ee20-4081-b697-586ad19b354e",
+      "name": "Edit an image2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Tf06ftYu7cj0QewA",
+          "name": "try2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "models/imagen-4.0-ultra-generate-001",
+          "mode": "list",
+          "cachedResultName": "models/imagen-4.0-ultra-generate-001"
+        },
+        "prompt": "=Você é um modelo de visão e geração de imagens especializado em MODA, LOOKS e EDIÇÃO DE ROUPAS.\nSua função é analisar duas imagens (quando existirem):\n\nIMAGEM_BASE \"{{$binary.image_base}}\" → foto do cliente\n\nIMAGEM_REFERÊNCIA \"{{$binary.image_reference}}\" → roupa, peça ou estilo que o cliente quer usar ou aplicar\n\nQuando não houver imagens, gerar a partir do prompt textual\n\n⚙️ Objetivo Geral\n\nGerar uma imagem final realista, elegante e coerente com o pedido do usuário, sempre priorizando:\n\naparência real da pessoa (quando houver IMAGEM_BASE)\n\nforma, textura e estilo da roupa enviada (quando houver IMAGEM_REFERÊNCIA)\n\nintegração natural entre corpo, roupa, luz, sombras e proporções\n\nrespeitar completamente o pedido textual\n\nsempre manter estética profissional, estilo editorial, qualidade fotográfica\n\n🔍 REGRAS DE INTERPRETAÇÃO\n1. Quando tiver IMAGEM_BASE + IMAGEM_REFERÊNCIA → “Juntar as duas”\n\nUse este comportamento:\n\nAnalise cuidadosamente a IMAGEM_BASE (a pessoa):\naparência, pose, iluminação, tom da pele, formato do corpo, cabelos, sombras\n\nAnalise IMAGEM_REFERÊNCIA (a roupa/estilo):\ntecido, cor, textura, caimento, modelagem, botões, gola, mangas etc.\n\nAplique a roupa da referência na pessoa da imagem base\n\nAjuste iluminação e sombras para combinar\n\nAjuste o caimento natural da peça no corpo real\n\nRemova elementos que impeçam o encaixe\n\nPreserve integridade facial (NUNCA alterar o rosto do cliente)\n\nSaída esperada:\n\nA pessoa vestindo a roupa da imagem referência, de forma hiperrealista.\n\n2. Quando tiver apenas IMAGEM_REFERÊNCIA → “Editar ou modificar a roupa”\n\nSe o usuário pedir:\n\n“mude a cor da camisa”\n\n“coloque manga longa”\n\n“deixe mais justa”\n\n“faça versão preta”\n\netc.\n\nEntão:\n\nAnalise a roupa enviada\n\nTransforme a peça conforme o pedido\n\nNão inserir modelos humanos\n\nNão criar corpo novo\n\nApenas editar a roupa com realismo fotográfico\n\nSaída esperada:\n\nA roupa referência editada, mantendo textura realista.\n\n3. Quando tiver apenas IMAGEM_BASE → “Gerar novo look na pessoa”\n\nSe o usuário pedir:\n\n“crie um novo look para mim”\n\n“me coloque usando um vestido preto”\n\n“gere um visual casual para mim”\n\nEntão:\n\nAnalise profundamente a foto do cliente\n\nGere uma roupa completa do zero\n\nAplicada no corpo da pessoa\n\nTotalmente compatível com o pedido textual\n\nSaída esperada:\n\nA pessoa vestindo um look novo, criado pela IA.\n\n4. Quando não existir nenhuma imagem → “Criar look do zero”\n\nSe o usuário pedir:\n\n“monte um look casual feminino minimalista”\n\n“gere um look de festa com brilho”\n\n“crie um outfit para aniversário”\n\nEntão:\n\nCriar modelo humano neutro (não real, não baseado em pessoas reais)\n\nCriar look completo seguindo o estilo pedido\n\nGerar fundo neutro, iluminação profissional\n\nSaída esperada:\n\nLook do zero com modelo genérico, estilo editorial.\n\n🧠 INSTRUÇÕES DE GERAÇÃO\n\nSempre:\n\nrenderizar em alta qualidade\n\nestética realista (nunca caricatura)\n\nmanter fidelidade ao corpo real (quando houver)\n\npreservar textura da roupa editada ou aplicada\n\nmanter proporções naturais\n\najustar sombra, luz, contraste e cor\n\nremover elementos distorcidos\n\nnão adicionar texto na imagem, logos, marcas ou objetos não mencionados",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        944,
+        224
+      ],
+      "id": "3e1911eb-de95-4507-870d-089abd5bf67f",
+      "name": "Generate an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Tf06ftYu7cj0QewA",
+          "name": "try2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "responseDataSource": "set",
+        "inputFieldName": "edited",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2128,
+        -96
+      ],
+      "id": "41b7c6b0-2511-4a68-a90f-bf30934988cb",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1d0af13a-fdf1-4eea-8fa3-8642e210f38b",
+              "leftValue": "={{$binary.image_reference}}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -208,
+        480
+      ],
+      "id": "c42befd6-3fef-45ee-a46a-d9b3c00add80",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "67037996-db03-457c-9e3f-833f48cf0e53",
+              "name": "mode",
+              "value": "={{ $json.body.mode }}",
+              "type": "string"
+            },
+            {
+              "id": "7c219909-b831-48e8-b475-42ddbe0203d4",
+              "name": "prompt_final",
+              "value": "={{ $json.body.prompt }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        48,
+        688
+      ],
+      "id": "486e4a6d-9094-47dd-867f-1515d6570c46",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9229c50d-ba79-4569-92c6-0e98aa978d1f",
+                    "leftValue": "={{ $json.mode }}",
+                    "rightValue": "generate",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "5efa7c24-65ac-46f1-920b-2969d6dfdff0",
+                    "leftValue": "={{ $json.mode }}",
+                    "rightValue": "combine",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8c4b73f5-fddb-446b-97cc-604ec0224936",
+                    "leftValue": "={{ $json.mode }}",
+                    "rightValue": "edit",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c29e4d68-6fff-4d24-a379-9c7ccf7b5df9",
+                    "leftValue": "={{ $json.mode }}",
+                    "rightValue": "from_scratch",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        304,
+        752
+      ],
+      "id": "8765c0f5-e419-4562-b1f7-927f0de86143",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "edit",
+        "prompt": "=Você deve vestir a pessoa da imagem BASE \"{{ $binary.image_base }}\" usando exatamente a roupa presente na imagem REFERÊNCIA\"{{$binary.image_reference}}\".\n\nRegras obrigatórias:\n1. Mantenha 100% as características físicas reais da pessoa da imagem base:\n   - rosto\n   - corpo\n   - peso\n   - tom de pele\n   - proporções corporais\n   - formato do corpo\n   - cabelo (se visível)\n   - postura e pose\n2. Substitua SOMENTE a roupa, sem alterar a pessoa.\n3. Aplique a roupa da imagem de referência de forma natural, realista e perfeitamente ajustada ao corpo.\n4. Preserve a identidade da pessoa original.\n5. Respeite iluminação, sombras e profundidade da imagem base.\n6. Não redesenhe a pessoa inteira. Apenas faça a troca da roupa.\n7. Mantenha a estética ULTRA-REALISTA.\n8. Recrie fielmente:\n   - cores\n   - textura\n   - material\n   - marca\n   - modelagem\n   - caimento\n   da roupa da imagem de referência.\n\nObjetivo final:\nGerar uma imagem da pessoa da foto base vestindo exatamente a roupa da imagem referência, com acabamento profissional e aparência natural.\n\nse houver Descrição extra fornecida pelo usuário (estilo desejado):\n\"{{ $('Edit Fields2').item.json.prompt_final }}\"\n\n\n\n",
+        "images": {
+          "values": [
+            {
+              "binaryPropertyName": "image_base"
+            }
+          ]
+        },
+        "options": {
+          "binaryPropertyOutput": "edited"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        944,
+        736
+      ],
+      "id": "b5bf732e-d329-4a27-9e25-79aac4f8ab3b",
+      "name": "Edit an image3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Tf06ftYu7cj0QewA",
+          "name": "try2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "edit",
+        "prompt": "=Você deve editar APENAS a roupa presente na imagem BASE \"{{ $binary.image_base }}\" ou na imagem de referência  \"{{ $binary.image_reference }}\".\n\nRegras obrigatórias:\n1. Preserve o formato, modelagem, proporções e estilo geral da peça original.\n2. Mantenha a roupa como o único elemento de foco — ignore corpo, fundo ou elementos externos.\n3. Aplique a modificação solicitada pelo usuário de forma realista:\n   - cores\n   - textura\n   - material\n   - detalhes\n   - comprimento\n   - estampa\n4. Não altere o design principal da roupa, apenas o que for explicitamente pedido.\n5. Não gere um novo modelo de peça. A estrutura da roupa original deve permanecer igual.\n6. Não adicione corpo humano ou manequins se eles não existirem.\n7. Mantenha aparência fotográfica e ultra-realista.\n8. Deixe o fundo da imagem simples, limpo ou uniformizado se necessário.\n9. Garanta que a peça continue pronta para ser aplicada no corpo da imagem base posteriormente.\n\nInstrução do usuário sobre a modificação desejada:\n\"{{ $('Edit Fields2').item.json.prompt_final }}\"\n",
+        "images": {
+          "values": [
+            {
+              "binaryPropertyName": "image_base"
+            }
+          ]
+        },
+        "options": {
+          "binaryPropertyOutput": "edited"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        960,
+        1024
+      ],
+      "id": "9a5b3969-ce0b-4efb-8393-c61a9ed74f5a",
+      "name": "Edit an image4",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Tf06ftYu7cj0QewA",
+          "name": "try2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "models/imagen-4.0-ultra-generate-001",
+          "mode": "list",
+          "cachedResultName": "models/imagen-4.0-ultra-generate-001"
+        },
+        "prompt": "=Você é um modelo de visão e geração de imagens especializado em MODA, LOOKS e EDIÇÃO DE ROUPAS.\nSua função é analisar duas imagens (quando existirem):\n\nIMAGEM_BASE \"{{$binary.image_base}}\" → foto do cliente\n\nIMAGEM_REFERÊNCIA \"{{$binary.image_reference}}\" → roupa, peça ou estilo que o cliente quer usar ou aplicar\n\nQuando não houver imagens, gerar a partir do prompt textual\n\n⚙️ Objetivo Geral\n\nGerar uma imagem final realista, elegante e coerente com o pedido do usuário, sempre priorizando:\n\naparência real da pessoa (quando houver IMAGEM_BASE)\n\nforma, textura e estilo da roupa enviada (quando houver IMAGEM_REFERÊNCIA)\n\nintegração natural entre corpo, roupa, luz, sombras e proporções\n\nrespeitar completamente o pedido textual\n\nsempre manter estética profissional, estilo editorial, qualidade fotográfica\n\n🔍 REGRAS DE INTERPRETAÇÃO\n1. Quando tiver IMAGEM_BASE + IMAGEM_REFERÊNCIA → “Juntar as duas”\n\nUse este comportamento:\n\nAnalise cuidadosamente a IMAGEM_BASE (a pessoa):\naparência, pose, iluminação, tom da pele, formato do corpo, cabelos, sombras\n\nAnalise IMAGEM_REFERÊNCIA (a roupa/estilo):\ntecido, cor, textura, caimento, modelagem, botões, gola, mangas etc.\n\nAplique a roupa da referência na pessoa da imagem base\n\nAjuste iluminação e sombras para combinar\n\nAjuste o caimento natural da peça no corpo real\n\nRemova elementos que impeçam o encaixe\n\nPreserve integridade facial (NUNCA alterar o rosto do cliente)\n\nSaída esperada:\n\nA pessoa vestindo a roupa da imagem referência, de forma hiperrealista.\n\n2. Quando tiver apenas IMAGEM_REFERÊNCIA → “Editar ou modificar a roupa”\n\nSe o usuário pedir:\n\n“mude a cor da camisa”\n\n“coloque manga longa”\n\n“deixe mais justa”\n\n“faça versão preta”\n\netc.\n\nEntão:\n\nAnalise a roupa enviada\n\nTransforme a peça conforme o pedido\n\nNão inserir modelos humanos\n\nNão criar corpo novo\n\nApenas editar a roupa com realismo fotográfico\n\nSaída esperada:\n\nA roupa referência editada, mantendo textura realista.\n\n3. Quando tiver apenas IMAGEM_BASE → “Gerar novo look na pessoa”\n\nSe o usuário pedir:\n\n“crie um novo look para mim”\n\n“me coloque usando um vestido preto”\n\n“gere um visual casual para mim”\n\nEntão:\n\nAnalise profundamente a foto do cliente\n\nGere uma roupa completa do zero\n\nAplicada no corpo da pessoa\n\nTotalmente compatível com o pedido textual\n\nSaída esperada:\n\nA pessoa vestindo um look novo, criado pela IA.\n\n4. Quando não existir nenhuma imagem → “Criar look do zero”\n\nSe o usuário pedir:\n\n“monte um look casual feminino minimalista”\n\n“gere um look de festa com brilho”\n\n“crie um outfit para aniversário”\n\nEntão:\n\nCriar modelo humano neutro (não real, não baseado em pessoas reais)\n\nCriar look completo seguindo o estilo pedido\n\nGerar fundo neutro, iluminação profissional\n\nSaída esperada:\n\nLook do zero com modelo genérico, estilo editorial.\n\n🧠 INSTRUÇÕES DE GERAÇÃO\n\nSempre:\n\nrenderizar em alta qualidade\n\nestética realista (nunca caricatura)\n\nmanter fidelidade ao corpo real (quando houver)\n\npreservar textura da roupa editada ou aplicada\n\nmanter proporções naturais\n\najustar sombra, luz, contraste e cor\n\nremover elementos distorcidos\n\nnão adicionar texto na imagem, logos, marcas ou objetos não mencionados",
+        "options": {
+          "binaryPropertyOutput": "edited"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        976,
+        1248
+      ],
+      "id": "84ba2529-88cf-42c2-9ca8-5b3427fb76fa",
+      "name": "Generate an image1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Tf06ftYu7cj0QewA",
+          "name": "try2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "edit",
+        "prompt": "=Transforme somente as roupas da pessoa na imagem base, substituindo o look atual por um novo look descrito pelo usuário.\n\nRegras obrigatórias:\n1. Preserve completamente:\n   - rosto\n   - corpo\n   - idade aparente\n   - tom de pele\n   - formato do corpo\n   - pose e proporções\n   - identidade visual da pessoa\n2. Não altere a fisionomia, não afine corpo, não mude cabelo, não mude altura, não mude expressão.\n3. Aplique o novo look exatamente conforme descrito em:\n   \"{{ $('Edit Fields2').item.json.prompt_final }}\"\n4. O novo look deve parecer uma roupa real, com tecido real, caimento natural e interação real com o corpo.\n5. Cores e estilos devem ser realistas e bem integrados à luz original da foto.\n6. Não gere novos objetos, pessoas ou elementos desnecessários.\n7. O fundo deve permanecer igual ou ser suavemente limpo, mas nunca totalmente substituído.\n8. Mantenha estética fotográfica ultrarrealista; nada de aparência de desenho ou renderização 3D.\n9. Ajuste sombras, dobras e volumes da roupa para se moldarem ao corpo real da pessoa.\n\nObjetivo final:\nGerar a mesma pessoa da imagem base, mas vestindo um novo look completo conforme o usuário pediu.",
+        "images": {
+          "values": [
+            {
+              "binaryPropertyName": "image_base"
+            }
+          ]
+        },
+        "options": {
+          "binaryPropertyOutput": "edited"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        944,
+        480
+      ],
+      "id": "29738ac1-ed60-4996-ae31-d0e7d84ebb22",
+      "name": "Edit an image5",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Tf06ftYu7cj0QewA",
+          "name": "try2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2096,
+        832
+      ],
+      "id": "89a1702e-a534-48e0-8b9b-913e80ec0843",
+      "name": "Respond to Webhook1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit an image2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit an image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit an image1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit an image1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit an image": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit an image2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Edit an image5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit an image3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit an image4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate an image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit an image4": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit an image3": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit an image5": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "18b00a9a-7400-4ac5-926f-47d6aa94d51a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "807138b7646fc3b35fe8d414d5cd61eb6889d95886d54e7341e1a712e0242dc1"
+  },
+  "id": "MAMxoANwzKKUH2r7",
+  "tags": []
+}
