@@ -63,255 +63,274 @@
         defina o objetivo, transforme-se.</p>
     </header>
 
-    <main class="grid md:grid-cols-12 gap-6 items-start">
+    <main class="space-y-8">
 
-      <!-- COLUNA DA ESQUERDA: Ferramentas (Input) -->
-      <div class="md:col-span-7 space-y-6">
+      <!-- Grid Principal (Inputs + Chat) -->
+      <div class="grid md:grid-cols-12 gap-6">
 
-        <!-- Card Principal: Foto Base -->
-        <section
-          class="bg-surface rounded-2xl shadow-card p-1 relative overflow-hidden group hover:shadow-float transition-all duration-300">
-          <div class="p-5">
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="font-serif text-xl font-bold flex items-center gap-2">
+        <!-- COLUNA DA ESQUERDA: Ferramentas (Input) -->
+        <div class="md:col-span-7 space-y-6">
+
+          <!-- Card Principal: Foto Base -->
+          <section
+            class="bg-surface rounded-2xl shadow-card p-1 relative overflow-hidden group hover:shadow-float transition-all duration-300">
+            <div class="p-5">
+              <div class="flex justify-between items-center mb-4">
+                <h2 class="font-serif text-xl font-bold flex items-center gap-2">
+                  <span
+                    class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs">1</span>
+                  Seu Look Base
+                </h2>
+                <span class="text-xs text-secondary font-medium uppercase tracking-wider">Obrigatório</span>
+              </div>
+
+              <!-- Area de Upload Estilizada -->
+              <div id="dropzone-main"
+                class="relative border border-dashed border-gray-300 bg-bg rounded-xl h-64 flex flex-col items-center justify-center cursor-pointer transition-colors hover:bg-gray-50 hover:border-secondary group-hover:border-secondary/50">
+
+                <div class="scan-line" id="scan-main"></div> <!-- Efeito Laser -->
+
+                <img id="preview-main" src=""
+                  class="absolute inset-0 w-full h-full object-cover rounded-xl hidden z-10" />
+
+                <div id="upload-placeholder-main" class="text-center p-6 z-0 transition-opacity">
+                  <div
+                    class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <p class="text-primary font-medium">Toque para adicionar foto</p>
+                  <p class="text-sm text-muted mt-1">Corpo inteiro funciona melhor</p>
+                </div>
+
+                <input id="input-main" name="image_base" type="file" accept="image/*"
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
+
+                <!-- Botão Remover Flutuante -->
+                <button id="remove-main"
+                  class="absolute top-2 right-2 z-30 bg-white/90 backdrop-blur text-red-500 p-2 rounded-full shadow hover:bg-red-50 hidden">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Configurações (Acordeão Visual) -->
+          <section class="bg-surface rounded-2xl shadow-card p-6">
+            <div class="mb-5">
+              <h2 class="font-serif text-xl font-bold flex items-center gap-2 mb-4">
                 <span
-                  class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs">1</span>
-                Seu Look Base
+                  class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs">2</span>
+                Objetivo & Referência
               </h2>
-              <span class="text-xs text-secondary font-medium uppercase tracking-wider">Obrigatório</span>
+
+              <!-- Modos em Chips -->
+              <div class="flex flex-wrap gap-2 mb-6">
+                <label class="cursor-pointer">
+                  <input type="radio" name="mode" value="generate" checked class="peer hidden" />
+                  <span
+                    class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Gerar
+                    Look</span>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="mode" value="combine" class="peer hidden" />
+                  <span
+                    class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Combinar
+                    Peça</span>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="mode" value="edit" class="peer hidden" />
+                  <span
+                    class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Editar
+                    Cor/Tecido</span>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="mode" value="from_scratch" class="peer hidden" />
+                  <span
+                    class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Criar
+                    do Zero</span>
+                </label>
+              </div>
+
+              <!-- Inputs Dinâmicos -->
+              <div class="space-y-4">
+                <!-- Prompt -->
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-2">Instrução para a
+                    IA</label>
+                  <textarea id="prompt" rows="3"
+                    placeholder="Ex: Crie um look elegante para um casamento de dia em sítio. Use tons pastéis."
+                    class="w-full bg-bg border-0 rounded-xl p-4 text-primary placeholder-gray-400 focus:ring-2 focus:ring-secondary/50 resize-none"></textarea>
+                </div>
+
+                <!-- Upload Referência (Mini) -->
+                <div
+                  class="bg-bg rounded-xl p-3 flex items-center gap-3 border border-transparent hover:border-gray-200 transition-colors">
+                  <div
+                    class="w-12 h-12 bg-white rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border">
+                    <img id="preview-ref" src="" class="w-full h-full object-cover hidden" />
+                    <svg id="icon-ref" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
+                      viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium truncate" id="file-ref-name">Adicionar roupa de referência (opcional)
+                    </p>
+                    <label class="text-xs text-secondary cursor-pointer hover:underline">
+                      Escolher imagem
+                      <input id="input-ref" name="image_reference" type="file" accept="image/*" class="hidden" />
+                    </label>
+                    <button id="remove-ref" class="text-xs text-red-500 ml-2 hover:underline hidden">Remover</button>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <!-- Area de Upload Estilizada -->
-            <div id="dropzone-main"
-              class="relative border border-dashed border-gray-300 bg-bg rounded-xl h-64 flex flex-col items-center justify-center cursor-pointer transition-colors hover:bg-gray-50 hover:border-secondary group-hover:border-secondary/50">
+            <!-- Botão de Ação -->
+            <button id="generateBtn"
+              class="w-full group relative overflow-hidden rounded-xl bg-primary text-white py-4 font-medium transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+              <div
+                class="absolute inset-0 w-0 bg-secondary transition-all duration-[250ms] ease-out group-hover:w-full">
+              </div>
+              <span class="relative flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 9a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zm7-10a1 1 0 01.707.293l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L12.586 5H10a1 1 0 110-2h5zM8 11a1 1 0 011-1h5a1 1 0 110 2H9a1 1 0 01-1-1z"
+                    clip-rule="evenodd" />
+                </svg>
+                Gerar Look com IA
+              </span>
+            </button>
 
-              <div class="scan-line" id="scan-main"></div> <!-- Efeito Laser -->
+            <div class="mt-2 text-center">
+              <button id="resetBtn" class="text-xs text-muted hover:text-primary underline">Limpar tudo e
+                recomeçar</button>
+            </div>
+          </section>
 
-              <img id="preview-main" src=""
-                class="absolute inset-0 w-full h-full object-cover rounded-xl hidden z-10" />
+        </div>
 
-              <div id="upload-placeholder-main" class="text-center p-6 z-0 transition-opacity">
-                <div
-                  class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm text-secondary">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+        <!-- COLUNA DA DIREITA: Chat -->
+        <div class="md:col-span-5 flex flex-col h-full">
+
+          <!-- Chat Minimalista -->
+          <section
+            class="bg-surface rounded-2xl shadow-card flex flex-col h-full min-h-[500px] relative overflow-hidden">
+            <div class="bg-primary p-4 text-white flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <p class="text-primary font-medium">Toque para adicionar foto</p>
-                <p class="text-sm text-muted mt-1">Corpo inteiro funciona melhor</p>
-              </div>
-
-              <input id="input-main" name="image_base" type="file" accept="image/*"
-                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
-
-              <!-- Botão Remover Flutuante -->
-              <button id="remove-main"
-                class="absolute top-2 right-2 z-30 bg-white/90 backdrop-blur text-red-500 p-2 rounded-full shadow hover:bg-red-50 hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <!-- Configurações (Acordeão Visual) -->
-        <section class="bg-surface rounded-2xl shadow-card p-6">
-          <div class="mb-5">
-            <h2 class="font-serif text-xl font-bold flex items-center gap-2 mb-4">
-              <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs">2</span>
-              Objetivo & Referência
-            </h2>
-
-            <!-- Modos em Chips -->
-            <div class="flex flex-wrap gap-2 mb-6">
-              <label class="cursor-pointer">
-                <input type="radio" name="mode" value="generate" checked class="peer hidden" />
-                <span
-                  class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Gerar
-                  Look</span>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="mode" value="combine" class="peer hidden" />
-                <span
-                  class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Combinar
-                  Peça</span>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="mode" value="edit" class="peer hidden" />
-                <span
-                  class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Editar
-                  Cor/Tecido</span>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="mode" value="from_scratch" class="peer hidden" />
-                <span
-                  class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Criar
-                  do Zero</span>
-              </label>
-            </div>
-
-            <!-- Inputs Dinâmicos -->
-            <div class="space-y-4">
-              <!-- Prompt -->
-              <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-2">Instrução para a
-                  IA</label>
-                <textarea id="prompt" rows="3"
-                  placeholder="Ex: Crie um look elegante para um casamento de dia em sítio. Use tons pastéis."
-                  class="w-full bg-bg border-0 rounded-xl p-4 text-primary placeholder-gray-400 focus:ring-2 focus:ring-secondary/50 resize-none"></textarea>
-              </div>
-
-              <!-- Upload Referência (Mini) -->
-              <div
-                class="bg-bg rounded-xl p-3 flex items-center gap-3 border border-transparent hover:border-gray-200 transition-colors">
-                <div
-                  class="w-12 h-12 bg-white rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border">
-                  <img id="preview-ref" src="" class="w-full h-full object-cover hidden" />
-                  <svg id="icon-ref" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                      d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                   </svg>
                 </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-sm font-medium truncate" id="file-ref-name">Adicionar roupa de referência (opcional)
+                <div>
+                  <h3 class="font-serif font-bold text-sm">Consultora AI</h3>
+                  <p class="text-[10px] text-gray-300 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span> Online
                   </p>
-                  <label class="text-xs text-secondary cursor-pointer hover:underline">
-                    Escolher imagem
-                    <input id="input-ref" name="image_reference" type="file" accept="image/*" class="hidden" />
-                  </label>
-                  <button id="remove-ref" class="text-xs text-red-500 ml-2 hover:underline hidden">Remover</button>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Botão de Ação -->
-          <button id="generateBtn"
-            class="w-full group relative overflow-hidden rounded-xl bg-primary text-white py-4 font-medium transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
-            <div class="absolute inset-0 w-0 bg-secondary transition-all duration-[250ms] ease-out group-hover:w-full">
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50 no-scrollbar">
+              <!-- Mensagem de Boas vindas -->
+              <div class="flex justify-start">
+                <div
+                  class="bg-white border border-gray-100 text-gray-800 rounded-2xl rounded-tl-none py-3 px-4 text-sm shadow-sm max-w-[85%]">
+                  <p class="font-serif font-bold text-gray-900 mb-1">Olá! ✨</p>
+                  <p>Sou sua stylist pessoal. Posso analisar suas fotos ou dar dicas de moda. O que vamos ver hoje?</p>
+                </div>
+              </div>
             </div>
-            <span class="relative flex items-center justify-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                  d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 9a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zm7-10a1 1 0 01.707.293l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L12.586 5H10a1 1 0 110-2h5zM8 11a1 1 0 011-1h5a1 1 0 110 2H9a1 1 0 01-1-1z"
-                  clip-rule="evenodd" />
-              </svg>
-              Gerar Look com IA
-            </span>
+
+            <!-- Input do Chat -->
+            <div class="p-3 bg-white border-t border-gray-100">
+              <!-- Preview de Imagem no Chat -->
+              <div id="chat-image-preview-container"
+                class="hidden relative w-full mb-2 bg-gray-50 rounded-lg p-2 border border-dashed border-gray-300 flex items-center gap-3">
+                <img id="chat-image-preview" src="" class="w-10 h-10 rounded object-cover border">
+                <span class="text-xs text-gray-500 truncate flex-1">Imagem anexada</span>
+                <button id="remove-chat-image" class="text-gray-400 hover:text-red-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <label class="cursor-pointer text-gray-400 hover:text-secondary transition p-2 bg-gray-50 rounded-full">
+                  <input type="file" id="chat-file-input" accept="image/*" class="hidden">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </label>
+                <input type="text" id="chat-input" placeholder="Pergunte sobre estilo..."
+                  class="flex-1 bg-gray-100 text-sm rounded-full px-4 py-3 focus:outline-none focus:ring-1 focus:ring-primary placeholder-gray-400 text-primary">
+                <button id="send-chat-btn"
+                  class="bg-primary text-white p-3 rounded-full hover:bg-black transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform rotate-90" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                      d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- Área de Resultado (Agora embaixo de tudo) -->
+      <section id="resultSection" class="hidden bg-surface rounded-2xl shadow-card p-6 border border-secondary/20">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-serif font-bold text-2xl">Seu Novo Look</h3>
+          <span
+            class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wide">Gerado
+            com Sucesso</span>
+        </div>
+        <div class="rounded-2xl overflow-hidden bg-gray-100 mb-6 relative group shadow-inner">
+          <img id="resultImage" src="" class="w-full h-auto object-contain max-h-[800px] mx-auto" />
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a id="downloadBtn" download
+            class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white rounded-xl font-medium hover:bg-black transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                clip-rule="evenodd" />
+            </svg>
+            Baixar Imagem
+          </a>
+          <button id="regenerateBtn"
+            class="inline-flex items-center justify-center px-8 py-3 bg-white border border-gray-200 text-primary rounded-xl font-medium hover:bg-gray-50 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Gerar Novamente
           </button>
+        </div>
+      </section>
 
-          <div class="mt-2 text-center">
-            <button id="resetBtn" class="text-xs text-muted hover:text-primary underline">Limpar tudo e
-              recomeçar</button>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- COLUNA DA DIREITA: Chat & Resultado -->
-      <div class="md:col-span-5 flex flex-col gap-6 h-full">
-
-        <!-- Área de Resultado (Inicia Oculta) -->
-        <section id="resultSection" class="hidden bg-surface rounded-2xl shadow-card p-4 border border-secondary/20">
-          <div class="flex items-center justify-between mb-3">
-            <h3 class="font-serif font-bold text-lg">Novo Look</h3>
-            <span
-              class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide">Gerado</span>
-          </div>
-          <div class="rounded-xl overflow-hidden bg-gray-100 mb-4 relative group">
-            <img id="resultImage" src="" class="w-full h-auto object-cover max-h-[500px]" />
-            <div
-              class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-              <a id="downloadBtn" download
-                class="bg-white text-primary px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transform hover:scale-105 transition-transform">Baixar</a>
-            </div>
-          </div>
-          <div class="text-center">
-            <button id="regenerateBtn" class="text-sm text-secondary font-medium hover:underline">Não gostou? Tentar
-              outra opção</button>
-          </div>
-        </section>
-
-        <!-- Chat Minimalista -->
-        <section
-          class="bg-surface rounded-2xl shadow-card flex flex-col h-[500px] md:h-[600px] relative overflow-hidden">
-          <div class="bg-primary p-4 text-white flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="font-serif font-bold text-sm">Consultora AI</h3>
-                <p class="text-[10px] text-gray-300 flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 bg-green-400 rounded-full"></span> Online
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-4 bg-gray-50 no-scrollbar">
-            <!-- Mensagem de Boas vindas -->
-            <div class="flex justify-start">
-              <div
-                class="bg-white border border-gray-100 text-gray-800 rounded-2xl rounded-tl-none py-3 px-4 text-sm shadow-sm max-w-[85%]">
-                <p class="font-serif font-bold text-gray-900 mb-1">Olá! ✨</p>
-                <p>Sou sua stylist pessoal. Posso analisar suas fotos ou dar dicas de moda. O que vamos ver hoje?</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Input do Chat -->
-          <div class="p-3 bg-white border-t border-gray-100">
-            <!-- Preview de Imagem no Chat -->
-            <div id="chat-image-preview-container"
-              class="hidden relative w-full mb-2 bg-gray-50 rounded-lg p-2 border border-dashed border-gray-300 flex items-center gap-3">
-              <img id="chat-image-preview" src="" class="w-10 h-10 rounded object-cover border">
-              <span class="text-xs text-gray-500 truncate flex-1">Imagem anexada</span>
-              <button id="remove-chat-image" class="text-gray-400 hover:text-red-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <label class="cursor-pointer text-gray-400 hover:text-secondary transition p-2 bg-gray-50 rounded-full">
-                <input type="file" id="chat-file-input" accept="image/*" class="hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </label>
-              <input type="text" id="chat-input" placeholder="Pergunte sobre estilo..."
-                class="flex-1 bg-gray-100 text-sm rounded-full px-4 py-3 focus:outline-none focus:ring-1 focus:ring-primary placeholder-gray-400 text-primary">
-              <button id="send-chat-btn"
-                class="bg-primary text-white p-3 rounded-full hover:bg-black transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform rotate-90" viewBox="0 0 20 20"
-                  fill="currentColor">
-                  <path
-                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </section>
-
-      </div>
     </main>
 
     <footer class="mt-12 text-center text-[10px] text-gray-400 font-medium uppercase tracking-widest">
