@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
-  <title>AI Look | Seu Personal Stylist</title>
+  <title>AI Looks | Seu Personal Stylist</title>
 
   <!-- Google Fonts: Playfair (Editorial) & DM Sans (Moderno) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,7 +58,7 @@
       <div
         class="inline-block bg-primary text-white text-[10px] uppercase tracking-[0.2em] px-3 py-1 mb-3 rounded-full">
         Beta v1.0</div>
-      <h1 class="text-5xl md:text-6xl font-serif font-bold mb-3 tracking-tight text-primary">AI Look</h1>
+      <h1 class="text-5xl md:text-6xl font-serif font-bold mb-3 tracking-tight text-primary">AI Looks</h1>
       <p class="text-muted text-lg font-light max-w-md mx-auto">Sua consultoria de estilo pessoal. <br>Envie uma foto,
         defina o objetivo, transforme-se.</p>
     </header>
@@ -133,33 +133,8 @@
                 Objetivo & Referência
               </h2>
 
-              <!-- Modos em Chips -->
-              <div class="flex flex-wrap gap-2 mb-6">
-                <label class="cursor-pointer">
-                  <input type="radio" name="mode" value="generate" checked class="peer hidden" />
-                  <span
-                    class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Gerar
-                    Look</span>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="radio" name="mode" value="combine" class="peer hidden" />
-                  <span
-                    class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Combinar
-                    Peça</span>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="radio" name="mode" value="edit" class="peer hidden" />
-                  <span
-                    class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Editar
-                    Cor/Tecido</span>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="radio" name="mode" value="from_scratch" class="peer hidden" />
-                  <span
-                    class="px-4 py-2 rounded-full border border-border text-sm font-medium transition-all peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary hover:bg-gray-50">Criar
-                    do Zero</span>
-                </label>
-              </div>
+              <!-- Modos removidos conforme solicitação -->
+              <input type="hidden" name="mode" value="generate" checked />
 
               <!-- Inputs Dinâmicos -->
               <div class="space-y-4">
@@ -185,7 +160,8 @@
                     </svg>
                   </div>
                   <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium truncate" id="file-ref-name">Adicionar roupa de referência (opcional)
+                    <p class="text-sm font-medium truncate" id="file-ref-name">Adicionar roupa de referência
+                      (Obrigatório)
                     </p>
                     <label class="text-xs text-secondary cursor-pointer hover:underline">
                       Escolher imagem
@@ -334,7 +310,7 @@
     </main>
 
     <footer class="mt-12 text-center text-[10px] text-gray-400 font-medium uppercase tracking-widest">
-      AI Look &copy; 2025 • Fashion Tech Intelligence
+      AI Looks &copy; 2025 • Fashion Tech Intelligence
     </footer>
   </div>
 

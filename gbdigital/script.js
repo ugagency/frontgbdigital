@@ -36,8 +36,8 @@ let fileRef = null;
 
 function updateGenerateState() {
     const mode = document.querySelector('input[name="mode"]:checked').value;
-    // Permite gerar se tiver foto principal OU se o modo for "criar do zero"
-    const can = (fileMain !== null) || mode === 'from_scratch';
+    // Permite gerar se tiver foto principal E foto de referência, OU se o modo for "criar do zero"
+    const can = (fileMain !== null && fileRef !== null) || mode === 'from_scratch';
 
     generateBtn.disabled = !can;
 
@@ -131,7 +131,7 @@ removeRef.addEventListener('click', () => {
 
     if (iconRef) iconRef.classList.remove('hidden');
     if (fileRefName) {
-        fileRefName.textContent = 'Adicionar roupa de referência (opcional)';
+        fileRefName.textContent = 'Adicionar roupa de referência (Obrigatório)';
         fileRefName.classList.remove('text-primary');
     }
 
@@ -189,8 +189,8 @@ async function sendGenerate() {
     const mode = document.querySelector('input[name="mode"]:checked').value;
     const prompt = promptEl.value || '';
 
-    if (!fileMain && mode !== 'from_scratch') {
-        alert('Por favor, adicione sua foto base primeiro.');
+    if ((!fileMain || !fileRef) && mode !== 'from_scratch') {
+        alert('Por favor, adicione sua foto base e a roupa de referência.');
         return;
     }
 
