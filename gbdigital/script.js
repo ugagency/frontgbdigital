@@ -35,7 +35,8 @@ let fileRef = null;
 // --- FUNÇÕES UTILITÁRIAS ---
 
 function updateGenerateState() {
-    const mode = document.querySelector('input[name="mode"]:checked').value;
+    const modeInput = document.querySelector('input[name="mode"]');
+    const mode = modeInput ? modeInput.value : 'generate';
     // Permite gerar se tiver foto principal E foto de referência, OU se o modo for "criar do zero"
     const can = (fileMain !== null && fileRef !== null) || mode === 'from_scratch';
 
@@ -140,8 +141,8 @@ removeRef.addEventListener('click', () => {
     updateGenerateState();
 });
 
-// Listeners dos Radio Buttons (Modos)
-document.querySelectorAll('input[name="mode"]').forEach(r => r.addEventListener('change', updateGenerateState));
+// Listeners dos Radio Buttons (Modos) - REMOVIDO (Agora é input hidden)
+// document.querySelectorAll('input[name="mode"]').forEach(r => r.addEventListener('change', updateGenerateState));
 
 // Reset Total
 resetBtn.addEventListener('click', () => {
@@ -150,7 +151,7 @@ resetBtn.addEventListener('click', () => {
     if (fileRef) removeRef.click();
 
     promptEl.value = '';
-    document.querySelector('input[name="mode"][value="generate"]').checked = true;
+    // document.querySelector('input[name="mode"][value="generate"]').checked = true; // Desnecessário para hidden
     resultSection.classList.add('hidden');
     updateGenerateState();
 });
@@ -186,7 +187,8 @@ if (dropZoneMain) {
 // --- ENVIO (GERAÇÃO) ---
 
 async function sendGenerate() {
-    const mode = document.querySelector('input[name="mode"]:checked').value;
+    const modeInput = document.querySelector('input[name="mode"]');
+    const mode = modeInput ? modeInput.value : 'generate';
     const prompt = promptEl.value || '';
 
     if ((!fileMain || !fileRef) && mode !== 'from_scratch') {
