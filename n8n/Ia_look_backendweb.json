@@ -1,5 +1,4 @@
 {
-  "name": "Ia_look_backendweb",
   "nodes": [
     {
       "parameters": {
@@ -45,7 +44,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -464,
+        592,
         480
       ],
       "id": "ca09faa4-e278-4296-bd4c-bffc8a700757",
@@ -57,15 +56,15 @@
         "assignments": {
           "assignments": [
             {
-              "id": "67037996-db03-457c-9e3f-833f48cf0e53",
-              "name": "mode",
-              "value": "={{ $json.body.mode }}",
-              "type": "string"
-            },
-            {
               "id": "7c219909-b831-48e8-b475-42ddbe0203d4",
               "name": "prompt_final",
               "value": "={{ $json.body.prompt }}",
+              "type": "string"
+            },
+            {
+              "id": "448ddcff-3696-4d7f-8152-baa0a99278a7",
+              "name": "EBOOK: Estilos Universais – Gustavo Balbi",
+              "value": "Os sete estilos universais são conceitos fundamentais na moda e servem como uma bússola para entender e construir uma identidade visual coerente. Cada estilo reflete diferentes aspectos de personalidade e preferências, ajudando homens a escolher roupas que representem quem são. Lembre-se, isso não é para ser difícil e confuso. Geralmente temos um desses como estilo base e os outros como comple-mentares. I- TRADICIONAI/CLÁSSICO O estilo clássico é marcado pela atemporalidade. Homens que seguem esse estilo preferem roupas de alta qualidade, com cortes tradicionais e cores neutras, como azul-marinho, cinza e branco. São adeptos de peças como ternos retos, camisas sociais e sapatos de couro. É o estilo de quem valoriza a formalidade e quer passar uma imagem de seriedade. ELEGANTE/CONTEMPORANEO Ele pode ser confundido, às vezes, com o tradicional. Mas o que diferencia um do outro é que o estilo elegante tem mais refinamento no corte, caimento, acabamento e também um toque de modernidade. Aqui, há uma combinação de peças de alfaiataria com elementos despojados, como calças slim fit, camisetas com cortes diferenciados e acessórios modernos. MODERNO/DRAMÁTICO É marcante e cheio de personalidade. Ele é para homens que querem ser notados, com escolhas ousadas em cores fortes, cortes geométricos e peças que impactam. É um visual que transmite confiança e inten-sidade. Ótimo para quem gosta de moda e quer fazer dela uma forma de expressão. ROMÂNTICO No estilo romântico, predominam peças com detalhes refinados e uma estética que transmite sensibilidade. Roupas em tons claros, tecidos suaves como algodão e linho, e acessórios discretos são comuns. É ideal para homens que gostam de um visual sofisticado e sutil, de forma equilibrada. CRIATIVO Esse estilo é para quem não tem medo de ousar. Uma pessoa criativa mistura cores, estampas, tecidos e complexidades peculiares, sempre buscando um visual origi-nal. Homens com esse estilo gostam de experimentar e usam a moda como uma forma de expressão pessoal. Aqui, não existem regras fixas. CASUAL/ESPORTIVO Esse estilo reflete uma personalidade descontraída e prática. O foco está em peças confortáveis e funcionais, como camisetas, jeans, jaquetas leves e tênis. As cores são mais diversificadas e os tecidos, muitas vezes, são mais leves e flexíveis. Ideal para homens que buscam objetivos no dia a dia e valorizam o conforto, sem abrir mão de uma aparência sofisticada. SEXY O estilo sexy para homens é caracterizado por peças e estampas que destacam a silhueta e a presença física, criando uma imagem de confiança, atração e poder. Esse estilo é construído com roupas que realçam o corpo sem exageros, transmitindo uma atitude segura e sofisticada. ARMÁRIO CAPSULA E uma abordagem prática e versátil para o seu guarda-roupa, que busca oferecer com um número reduzido de peças essenciais diversas combi-nações. A ideia é simplificar o dia a dia com escolhas bem pensadas e funcionais, investindo em roupas de qualidade e que façam sentido na sua rotina. Desta forma, é possível criar diversas combinações com facilidade, adaptando-se a diferentes peças sem precisar de um armário cheio. Lembrando que, as peças que você perceber que não faz sentido para o seu estilo, não precisa levar em consideração. Agora vamos às peças essenciais?! ROUPA PARA CADA TIPO DE CORPO Quando falamos de estilo masculino, a escolha das roupas ideais vai muito além das últimas tendências. Saber quais peças que favorecem o seu tipo de corpo pode transformar o visual, valorizando os pontos fortes e criando uma aparência equilibrada e confiante. Assim como cada pessoa é única, cada corpo tem suas particularidades, e entender essas diferenças é o primeiro passo para um guarda-roupa bem estruturado. Neste capítulo, exploraremos dicas e truques para ajudar homens a encontrar peças que realcem o melhor de cada formato corporal. Desde a escolha de cortes que acompanham a silhueta até tecidos que garantem um caimento perfeito. Aqui resumi alguns biotipos, outros juntei para ficar mais prático, mas leve em consideração as suas característi-cas, o que quer realçar ou disfarçar, e coloque na sua vida as dicas que farão sentido para você. ALTO E MAGRO Se você é alto e magro, e deseja disfarçar isso, aposte em: Looks com contraste, ou até mesmo em um look monocromático, use um cinto de cor diferente para fazer a quebra na silhueta. Gola careca ou arredondada, a gola V traz sensação de mais amplitude na área do colo e pescoço, se você não quer isso, evite Peças em tons claros. Não é que a roupa escura irá te emagrecer, mas elas trazem uma ilusão visual de você ser mais magro do que já é. Estampas com padronagens maiores. Estampas com desenhos muitos pequenos, podem te deixar com a impressão de mais magro, além das listras verticais também darem essa impressão de magreza e de ser mais alongado Camiseta para fora da calça. Quando você coloca por dentro acaba alongando mais, por isso, fica a seu critério o que você deseja transmitir. BAIXO 23 of 165 Se você é baixo e deseja aparentar ser mais alto, aposte em: Looks monocromáticos (um só tom), eles vão alongar a sua silhueta, dando a impressão de ser mais alto. Linhas verticais, as horizontais podem te achatar ainda mais Ajustes das peças. Por ser mais baixo, pode ser que algumas roupas tenham tecido sobrando na barra, por exemplo. Por isso, não deixe os ajustes de lado, eles são essenciais para dar um acabamento ao seu look e te ajudar a alongar Não é uma dica de vestimenta, mas tão importante quanto é a sua postura. Geralmente ficamos tão curvados durante o dia por conta do celular e afazeres que para algumas pessoas andar curvado já é algo natural, o que te diminui mais ainda. Então, sempre se conscientize de estar com a postura ereta. Estampas com padronagens menores. Por você já ser baixo, se usar padronagens maiores elas irão destoar muito e fazer o efeito inverso. Blusa até o meio do zíper da calça. Se passar muito, pode te achatar. Blusa até o meio do zíper da calça. Se passar muito, pode te achatar. GORDO Se você é gordinho (com todo respeito, ok?!) e se incomoda com isso, aposte em: Peças do seu tamanho. Muitos acabam comprando peças muito maiores ou pequenas demais para tentar disfarçar algo, mas acabam piorando o visual. Gola V. Ela vai alongar o seu pescoço Cores escuras. Assim como as claras tendem a expandir, as escuras fazem o contrário Estampas menores. Se forem muito grandes e chamativas, podem chamar atenção para lugares indesejáveis. Acessórios. Além de arrematar mais o look, eles vão trazer o foco para as extremidades do seu coroo tirando TAMANHO E CAIMENTO Na moda, alcançar o caimento perfeito nem sempre é fácil. As roupas compradas em lojas não ficam 100% adequadas ao corpo de cada um, e é aí que os ajustes são para fazer a diferença. Com pequenos reparos, é possível transformar uma peça comum em algo que valoriza seu estilo e destaca sua presença. Neste capítulo, vamos falar sobre como identificar as medidas ideais, o que observar na hora de comprar e como pequenos ajustes podem elevar o seu visual, garantindo conforto e mais confi-ança. CAMISA SOCIAI Pontos a serem observados: Colarinho: feche todos os botões e veja se consegue passar um dedo seu entre o colarinho e o pescoço. Se conseguir está perfeito, se passar mais de um é porque está largo, se for difícil passar um é porque está apertado. Ideal Apertado Folgado Linha do ombro: ela precisa estar entre o seu ombro e seu braço. CALÇA Pontos a serem observados: Barra: deve acabar um dedo acima do osso que nós temos na lateral do tornozelo ou, se você prefere um pouco maior, acima do sapato. X Lateral: não adianta mexer só na barra e a lateral está larga demais parecendo um \"saco de batata\". Ela não deve ficar colada, mas alinhada e próxima ao corpo. BLAZER E JAQUETAS Pontos a serem observados: Linha do ombro: precisa estar entre o seu ombro e o seu braço. Nem mais em cima, nem mais embaixo. Mesma coisa da camisa. Comprimento: estique os braços na lateral do corpo e faça como se fosse uma conha com as mãos e tente pegar na barra. Se estiver pegando, sobrando muito tecido, é porque está longo demais, se estiver muito acima que nem dá para pegar, é porque está curto. A mão conseguiu encostar sem sobrar nem faltar, perfeito. BERMUDA Pontos a serem observados: Comprimento: abaixo do joelho fica um aspecto de \"tiozão\" e te achata. O ideal é de 2 a 3 dedos acima do joelho. Largura: aqui já não há muitos ajustes, porque a proposta é ser mais solta mesmo. Nada muito aperta-do, pois não fica elegante. CAMISETAS Pontos a serem observados: Linha do ombro: precisa estar entre o seu ombro e o seu braço. Nem mais em cima, nem mais embaixo. Mesma coisa da camisa e do blazer. Comprimento: não pode passar do zíper da calça LOOKS PARA CADA OCASIÃO Montar o look ideal para cada ocasião é essencial para expressar estilo, personalidade e conforto. Cada ambiente ou compromisso exige uma escolha de roupas que combinem com a situação e sejam adequadas ao clima e à finalidade do evento. Neste guia, vamos explorar os melhores looks para diversos momentos, desde o casual do dia a dia até o social elegante, passando por produções para o clima frio, verão, praia, academia e até para casais. A proposta é ajudar você a escolher peças versáteis e estilosas que tragam o equilíbrio perfeito entre praticidade e sofisticação. CASUAL Bem-vindo ao mundo do estilo casual, onde a elegância encontra o conforto de forma natural. Este capítulo é um convite para explorar o equilíbrio perfeito entre looks descontraídos e sofisticados. Do casual chic ao casual esportivo, desvendaremos as nuances desse estilo versátil. Prepare-se para se destacar com confiança em situações como jantares, encontros, saídas com amigos e outras ocasiões do dia a dia. CASAL Aqui está uma oportunidade especial para ambos. Não só para deixar sua parceira feliz, mas também para coordenar seus visuais e estar no mesmo ritmo. Ajudar sua amada a escolher sua roupa não apenas demonstra cuidado, mas também garante que vocês estejam em sintonia, inclusive na altura das roupas, literalmente. De ocasiões românticas a encontros informais, separei uma variedade de cenários para alinhar os visuais feminino e masculino, facilitando a criação de seu próprio look. Compartilhar processo de vestir fortalece o vínculo e torna os momentos especiais ainda mais memoráveis. Porque afinal, o amor se manifesta de muitas maneiras, inclusive no estilo que vocês escolhem juntos. FRIO Nesta última seção, exploraremos os looks ideais para enfrentar o frio com estilo e funcionalidade. Quando as temperaturas caem, a moda ganha um novo propósito, possibilitando a criação de visuais quentes e marcantes. Além de manter o calor, os looks de inverno oferecem a chance de expressar individualidade. Camadas bem pensadas e escolhas de peças-chave permitem enfrentar o frio com confiança. Esta parte do eBook explora diversos estilos de looks de inverno, abrangendo do casual ao formal, proporcionando opções elegantes e confortáveis para enfrentar o frio com sofisticação. ACADEMIA Na academia, vestir-se bem vai além do treino - é uma forma de construir relacionamentos e destacar-se. Escolher roupas adequadas, especialmente tênis projetados para atividades físicas, contribui para o conforto e desempenho. Um visual simples e apropriado, não apenas mostra respeito pelo ambiente, mas também pode abrir portas para conexões profissionais. Optar por peças básicas e funcionais é uma abordagem eficaz, lembrando que o foco principal é sempre o esforço investido no treino, mas pode ter certeza que estar bem vestido na academia irá atrair olhares e conexões. STREETWEAR Neste capítulo exploraremos o streetwear, um estilo urbano que combina conforto casual com atitude, peças na proposta oversize, logos e estampas aparentes. Originado nas ruas das cidades, o streetwear celebra a individualidade por meio de peças ousadas e influências culturais como rap e hip-hop No entanto, é importante lembrar que esse estilo não se encaixa em todas as ocasiões. Você irá aprender como incorporá-lo com autenticidade ao seu guarda-roupa, mantendo em mente as situações apropriadas. VERÃO E PRAIA Neste capítulo, mergulharemos na proposta praiana e de verão, onde a leveza é a palavra chave. Seja para relaxar à beira-mar, pegar ondas, caminhar pela areia ou aproveitar um almoço ou jantar com vista para o oceano, as opções são variadas adaptáveis. Deixe-se levar pela atmosfera ensolarada e escolha suas roupas de acordo com as atividades planejadas. sempre bom lembrar que tecidos naturais como: linho, viscose, seda e algodão são ótimos para esses ambientes. SOCIAL/ELEGANTE Bem-vindo ao mundo do estilo onde a elegância é social, essencial. Esta seção é dedicada a orientá-lo em ocasiões especiais e ambientes profissionais. Seja para um casamento, uma festa de alto padrão ou o ambiente corporativo, essas sugestões e inspirações de looks serão seus guias confiáveis. Do casual chic ao casual esportivo, desvendaremos as nuances desse estilo versátil. Prepare-se para se destacar com confiança em situações como jantares, encontros, saídas com amigos e outras ocasiões do dia a dia. Cada detalhe importa no estilo social, onde a confiança e a classe se destacam. Dos ternos aos detalhes refinados, encontrará orientações precisas para se destacar com maestria em qualquer evento que peça esse dress code",
               "type": "string"
             }
           ]
@@ -76,8 +75,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -16,
-        -64
+        816,
+        480
       ],
       "id": "7b47ac45-bfd0-498d-afd9-138a08678e55",
       "name": "Edit Fields1"
@@ -86,7 +85,7 @@
       "parameters": {
         "resource": "image",
         "operation": "edit",
-        "prompt": "=Você deve vestir a pessoa da imagem BASE \"{{ $binary.image_base }}\" usando exatamente a roupa presente na imagem REFERÊNCIA\"{{$binary.image_reference}}\".\n\nRegras obrigatórias:\n1. Mantenha 100% as características físicas reais da pessoa da imagem base:\n   - rosto\n   - corpo\n   - peso\n   - tom de pele\n   - proporções corporais\n   - formato do corpo\n   - cabelo (se visível)\n   - postura e pose\n2. Substitua SOMENTE a roupa, sem alterar a pessoa.\n3. Aplique a roupa da imagem de referência de forma natural, realista e perfeitamente ajustada ao corpo.\n4. Preserve a identidade da pessoa original.\n5. Respeite iluminação, sombras e profundidade da imagem base.\n6. Não redesenhe a pessoa inteira. Apenas faça a troca da roupa.\n7. Mantenha a estética ULTRA-REALISTA.\n8. Recrie fielmente:\n   - cores\n   - textura\n   - material\n   - marca\n   - modelagem\n   - caimento\n   da roupa da imagem de referência.\n\nObjetivo final:\nGerar uma imagem da pessoa da foto base vestindo exatamente a roupa da imagem referência, com acabamento profissional e aparência natural.\n\nDescrição extra fornecida pelo usuário (estilo desejado):\n\"{{ $json.prompt_final }}\"\n\n\n\n",
+        "prompt": "=Você é um stylist profissional digital do produto AI Look.\n\nSua tarefa é gerar UMA imagem realista de um look completo, seguindo rigorosamente estas regras:\n\n1️⃣ IMAGEM BASE (OBRIGATÓRIA)\n- Utilize a \"{{ $binary.image_base }}\"  como a pessoa principal.\n- Preserve identidade, rosto, corpo, proporções, tom de pele e características físicas.\n- NÃO embeleze, NÃO altere traços, NÃO mude idade ou biotipo.\n\n2️⃣ IMAGEM DE REFERÊNCIA (OBRIGATÓRIA E CENTRAL)\n- A roupa presente na \"{{$binary.image_reference}}\"image_reference DEVE ser usada obrigatoriamente.\n- Essa peça é a BASE do look.\n- NÃO troque, NÃO substitua e NÃO modifique a peça.\n- Todo o restante do look deve ser construído PARA COMBINAR com ela.\n\n3️⃣ CONTEXTO DO USUÁRIO\n- Considere exatamente o seguinte objetivo ao montar o look:\n\"{{ $json.prompt_final }}\"\n\n4️⃣ MÉTODO OBRIGATÓRIO (EBOOK)\n- Todas as decisões de estilo DEVEM seguir exclusivamente o ebook:\n\"{{ $json['EBOOK: Estilos Universais – Gustavo Balbi'] }}\"\n\n- Escolha UM estilo universal predominante adequado ao contexto.\n- Aplique esse estilo na composição do look.\n\n⚠️ É PROIBIDO:\n- inventar estilos fora do ebook\n- misturar métodos\n- criar looks sem justificativa conceitual\n\n5️⃣ COMPOSIÇÃO DO LOOK\n- Complete o visual com:\n  • calça ou parte inferior adequada\n  • calçado coerente\n  • acessórios sutis e funcionais\n- Cores, caimento e materiais devem harmonizar com a peça de referência.\n- O look deve parecer usável, realista e elegante.\n\n6️⃣ TRECHO DO EBOOK (CONFIRMAÇÃO)\n- Antes de gerar a imagem, valide internamente sua escolha usando este princípio do ebook:\n\"O estilo elegante/contemporâneo une alfaiataria refinada com elementos modernos, priorizando caimento, acabamento e sofisticação.\"\n\n7️⃣ ESTILO DA IMAGEM\n- Fotografia ultrarrealista\n- Iluminação natural e profissional\n- Texturas reais de tecido\n- Cenário neutro ou contextual (sem roubar atenção do look)\n- Aparência editorial, clean e sofisticada\n\n8️⃣ EXECUÇÃO\n- Gere APENAS a imagem final.\n- Não explique.\n- Não descreva.\n- Não escreva texto.\n- Não inclua legendas ou comentários.",
         "images": {
           "values": [
             {
@@ -102,210 +101,11 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        944,
-        -176
+        1008,
+        480
       ],
       "id": "2ba21018-8c04-43bf-8dba-5bcac429c3bb",
       "name": "Edit an image",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "Tf06ftYu7cj0QewA",
-          "name": "try2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "operation": "edit",
-        "prompt": "=Você deve editar APENAS a roupa presente na imagem BASE \"{{ $binary.image_base }}\" ou na imagem de referência  \"{{ $binary.image_reference }}\".\n\nRegras obrigatórias:\n1. Preserve o formato, modelagem, proporções e estilo geral da peça original.\n2. Mantenha a roupa como o único elemento de foco — ignore corpo, fundo ou elementos externos.\n3. Aplique a modificação solicitada pelo usuário de forma realista:\n   - cores\n   - textura\n   - material\n   - detalhes\n   - comprimento\n   - estampa\n4. Não altere o design principal da roupa, apenas o que for explicitamente pedido.\n5. Não gere um novo modelo de peça. A estrutura da roupa original deve permanecer igual.\n6. Não adicione corpo humano ou manequins se eles não existirem.\n7. Mantenha aparência fotográfica e ultra-realista.\n8. Deixe o fundo da imagem simples, limpo ou uniformizado se necessário.\n9. Garanta que a peça continue pronta para ser aplicada no corpo da imagem base posteriormente.\n\nInstrução do usuário sobre a modificação desejada:\n\"{{ $json.prompt_final }}\"\n",
-        "images": {
-          "values": [
-            {
-              "binaryPropertyName": "image_base"
-            },
-            {
-              "binaryPropertyName": "image_reference"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        944,
-        32
-      ],
-      "id": "860fe2b1-a36f-4e94-8e54-d459e664adad",
-      "name": "Edit an image1",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "Tf06ftYu7cj0QewA",
-          "name": "try2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $json.mode }}",
-                    "rightValue": "generate",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "a1e1d4c8-8ae3-4b5e-bd8f-ff459e56b4c9"
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "5efa7c24-65ac-46f1-920b-2969d6dfdff0",
-                    "leftValue": "={{ $json.mode }}",
-                    "rightValue": "combine",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "8c4b73f5-fddb-446b-97cc-604ec0224936",
-                    "leftValue": "={{ $json.mode }}",
-                    "rightValue": "edit",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "c29e4d68-6fff-4d24-a379-9c7ccf7b5df9",
-                    "leftValue": "={{ $json.mode }}",
-                    "rightValue": "from_scratch",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.3,
-      "position": [
-        160,
-        -112
-      ],
-      "id": "9988c7cc-4c6f-4ab4-a651-008157ece9ed",
-      "name": "Switch"
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "operation": "edit",
-        "prompt": "=Transforme somente as roupas da pessoa na imagem base, substituindo o look atual por um novo look descrito pelo usuário.\n\nRegras obrigatórias:\n1. Preserve completamente:\n   - rosto\n   - corpo\n   - idade aparente\n   - tom de pele\n   - formato do corpo\n   - pose e proporções\n   - identidade visual da pessoa\n2. Não altere a fisionomia, não afine corpo, não mude cabelo, não mude altura, não mude expressão.\n3. Aplique o novo look exatamente conforme descrito em:\n   \"{{ $('Edit Fields1').item.json.prompt_final }}\"\n4. O novo look deve parecer uma roupa real, com tecido real, caimento natural e interação real com o corpo.\n5. Cores e estilos devem ser realistas e bem integrados à luz original da foto.\n6. Não gere novos objetos, pessoas ou elementos desnecessários.\n7. O fundo deve permanecer igual ou ser suavemente limpo, mas nunca totalmente substituído.\n8. Mantenha estética fotográfica ultrarrealista; nada de aparência de desenho ou renderização 3D.\n9. Ajuste sombras, dobras e volumes da roupa para se moldarem ao corpo real da pessoa.\n\nObjetivo final:\nGerar a mesma pessoa da imagem base, mas vestindo um novo look completo conforme o usuário pediu.",
-        "images": {
-          "values": [
-            {
-              "binaryPropertyName": "image_base"
-            },
-            {
-              "binaryPropertyName": "image_reference"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        928,
-        -384
-      ],
-      "id": "a839819e-ee20-4081-b697-586ad19b354e",
-      "name": "Edit an image2",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "Tf06ftYu7cj0QewA",
-          "name": "try2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "modelId": {
-          "__rl": true,
-          "value": "models/imagen-4.0-ultra-generate-001",
-          "mode": "list",
-          "cachedResultName": "models/imagen-4.0-ultra-generate-001"
-        },
-        "prompt": "=Você é um modelo de visão e geração de imagens especializado em MODA, LOOKS e EDIÇÃO DE ROUPAS.\nSua função é analisar duas imagens (quando existirem):\n\nIMAGEM_BASE \"{{$binary.image_base}}\" → foto do cliente\n\nIMAGEM_REFERÊNCIA \"{{$binary.image_reference}}\" → roupa, peça ou estilo que o cliente quer usar ou aplicar\n\nQuando não houver imagens, gerar a partir do prompt textual\n\n⚙️ Objetivo Geral\n\nGerar uma imagem final realista, elegante e coerente com o pedido do usuário, sempre priorizando:\n\naparência real da pessoa (quando houver IMAGEM_BASE)\n\nforma, textura e estilo da roupa enviada (quando houver IMAGEM_REFERÊNCIA)\n\nintegração natural entre corpo, roupa, luz, sombras e proporções\n\nrespeitar completamente o pedido textual\n\nsempre manter estética profissional, estilo editorial, qualidade fotográfica\n\n🔍 REGRAS DE INTERPRETAÇÃO\n1. Quando tiver IMAGEM_BASE + IMAGEM_REFERÊNCIA → “Juntar as duas”\n\nUse este comportamento:\n\nAnalise cuidadosamente a IMAGEM_BASE (a pessoa):\naparência, pose, iluminação, tom da pele, formato do corpo, cabelos, sombras\n\nAnalise IMAGEM_REFERÊNCIA (a roupa/estilo):\ntecido, cor, textura, caimento, modelagem, botões, gola, mangas etc.\n\nAplique a roupa da referência na pessoa da imagem base\n\nAjuste iluminação e sombras para combinar\n\nAjuste o caimento natural da peça no corpo real\n\nRemova elementos que impeçam o encaixe\n\nPreserve integridade facial (NUNCA alterar o rosto do cliente)\n\nSaída esperada:\n\nA pessoa vestindo a roupa da imagem referência, de forma hiperrealista.\n\n2. Quando tiver apenas IMAGEM_REFERÊNCIA → “Editar ou modificar a roupa”\n\nSe o usuário pedir:\n\n“mude a cor da camisa”\n\n“coloque manga longa”\n\n“deixe mais justa”\n\n“faça versão preta”\n\netc.\n\nEntão:\n\nAnalise a roupa enviada\n\nTransforme a peça conforme o pedido\n\nNão inserir modelos humanos\n\nNão criar corpo novo\n\nApenas editar a roupa com realismo fotográfico\n\nSaída esperada:\n\nA roupa referência editada, mantendo textura realista.\n\n3. Quando tiver apenas IMAGEM_BASE → “Gerar novo look na pessoa”\n\nSe o usuário pedir:\n\n“crie um novo look para mim”\n\n“me coloque usando um vestido preto”\n\n“gere um visual casual para mim”\n\nEntão:\n\nAnalise profundamente a foto do cliente\n\nGere uma roupa completa do zero\n\nAplicada no corpo da pessoa\n\nTotalmente compatível com o pedido textual\n\nSaída esperada:\n\nA pessoa vestindo um look novo, criado pela IA.\n\n4. Quando não existir nenhuma imagem → “Criar look do zero”\n\nSe o usuário pedir:\n\n“monte um look casual feminino minimalista”\n\n“gere um look de festa com brilho”\n\n“crie um outfit para aniversário”\n\nEntão:\n\nCriar modelo humano neutro (não real, não baseado em pessoas reais)\n\nCriar look completo seguindo o estilo pedido\n\nGerar fundo neutro, iluminação profissional\n\nSaída esperada:\n\nLook do zero com modelo genérico, estilo editorial.\n\n🧠 INSTRUÇÕES DE GERAÇÃO\n\nSempre:\n\nrenderizar em alta qualidade\n\nestética realista (nunca caricatura)\n\nmanter fidelidade ao corpo real (quando houver)\n\npreservar textura da roupa editada ou aplicada\n\nmanter proporções naturais\n\najustar sombra, luz, contraste e cor\n\nremover elementos distorcidos\n\nnão adicionar texto na imagem, logos, marcas ou objetos não mencionados",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        944,
-        224
-      ],
-      "id": "3e1911eb-de95-4507-870d-089abd5bf67f",
-      "name": "Generate an image",
       "credentials": {
         "googlePalmApi": {
           "id": "Tf06ftYu7cj0QewA",
@@ -323,329 +123,19 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        2128,
-        -96
+        1200,
+        480
       ],
       "id": "41b7c6b0-2511-4a68-a90f-bf30934988cb",
       "name": "Respond to Webhook"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "1d0af13a-fdf1-4eea-8fa3-8642e210f38b",
-              "leftValue": "={{$binary.image_reference}}",
-              "rightValue": "",
-              "operator": {
-                "type": "object",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -208,
-        480
-      ],
-      "id": "c42befd6-3fef-45ee-a46a-d9b3c00add80",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "67037996-db03-457c-9e3f-833f48cf0e53",
-              "name": "mode",
-              "value": "={{ $json.body.mode }}",
-              "type": "string"
-            },
-            {
-              "id": "7c219909-b831-48e8-b475-42ddbe0203d4",
-              "name": "prompt_final",
-              "value": "={{ $json.body.prompt }}",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        48,
-        688
-      ],
-      "id": "486e4a6d-9094-47dd-867f-1515d6570c46",
-      "name": "Edit Fields2"
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "9229c50d-ba79-4569-92c6-0e98aa978d1f",
-                    "leftValue": "={{ $json.mode }}",
-                    "rightValue": "generate",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "5efa7c24-65ac-46f1-920b-2969d6dfdff0",
-                    "leftValue": "={{ $json.mode }}",
-                    "rightValue": "combine",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "8c4b73f5-fddb-446b-97cc-604ec0224936",
-                    "leftValue": "={{ $json.mode }}",
-                    "rightValue": "edit",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "c29e4d68-6fff-4d24-a379-9c7ccf7b5df9",
-                    "leftValue": "={{ $json.mode }}",
-                    "rightValue": "from_scratch",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals",
-                      "name": "filter.operator.equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              }
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.3,
-      "position": [
-        304,
-        752
-      ],
-      "id": "8765c0f5-e419-4562-b1f7-927f0de86143",
-      "name": "Switch1"
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "operation": "edit",
-        "prompt": "=Você deve vestir a pessoa da imagem BASE \"{{ $binary.image_base }}\" usando exatamente a roupa presente na imagem REFERÊNCIA\"{{$binary.image_reference}}\".\n\nRegras obrigatórias:\n1. Mantenha 100% as características físicas reais da pessoa da imagem base:\n   - rosto\n   - corpo\n   - peso\n   - tom de pele\n   - proporções corporais\n   - formato do corpo\n   - cabelo (se visível)\n   - postura e pose\n2. Substitua SOMENTE a roupa, sem alterar a pessoa.\n3. Aplique a roupa da imagem de referência de forma natural, realista e perfeitamente ajustada ao corpo.\n4. Preserve a identidade da pessoa original.\n5. Respeite iluminação, sombras e profundidade da imagem base.\n6. Não redesenhe a pessoa inteira. Apenas faça a troca da roupa.\n7. Mantenha a estética ULTRA-REALISTA.\n8. Recrie fielmente:\n   - cores\n   - textura\n   - material\n   - marca\n   - modelagem\n   - caimento\n   da roupa da imagem de referência.\n\nObjetivo final:\nGerar uma imagem da pessoa da foto base vestindo exatamente a roupa da imagem referência, com acabamento profissional e aparência natural.\n\nse houver Descrição extra fornecida pelo usuário (estilo desejado):\n\"{{ $('Edit Fields2').item.json.prompt_final }}\"\n\n\n\n",
-        "images": {
-          "values": [
-            {
-              "binaryPropertyName": "image_base"
-            }
-          ]
-        },
-        "options": {
-          "binaryPropertyOutput": "edited"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        944,
-        736
-      ],
-      "id": "b5bf732e-d329-4a27-9e25-79aac4f8ab3b",
-      "name": "Edit an image3",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "Tf06ftYu7cj0QewA",
-          "name": "try2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "operation": "edit",
-        "prompt": "=Você deve editar APENAS a roupa presente na imagem BASE \"{{ $binary.image_base }}\" ou na imagem de referência  \"{{ $binary.image_reference }}\".\n\nRegras obrigatórias:\n1. Preserve o formato, modelagem, proporções e estilo geral da peça original.\n2. Mantenha a roupa como o único elemento de foco — ignore corpo, fundo ou elementos externos.\n3. Aplique a modificação solicitada pelo usuário de forma realista:\n   - cores\n   - textura\n   - material\n   - detalhes\n   - comprimento\n   - estampa\n4. Não altere o design principal da roupa, apenas o que for explicitamente pedido.\n5. Não gere um novo modelo de peça. A estrutura da roupa original deve permanecer igual.\n6. Não adicione corpo humano ou manequins se eles não existirem.\n7. Mantenha aparência fotográfica e ultra-realista.\n8. Deixe o fundo da imagem simples, limpo ou uniformizado se necessário.\n9. Garanta que a peça continue pronta para ser aplicada no corpo da imagem base posteriormente.\n\nInstrução do usuário sobre a modificação desejada:\n\"{{ $('Edit Fields2').item.json.prompt_final }}\"\n",
-        "images": {
-          "values": [
-            {
-              "binaryPropertyName": "image_base"
-            }
-          ]
-        },
-        "options": {
-          "binaryPropertyOutput": "edited"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        960,
-        1024
-      ],
-      "id": "9a5b3969-ce0b-4efb-8393-c61a9ed74f5a",
-      "name": "Edit an image4",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "Tf06ftYu7cj0QewA",
-          "name": "try2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "modelId": {
-          "__rl": true,
-          "value": "models/imagen-4.0-ultra-generate-001",
-          "mode": "list",
-          "cachedResultName": "models/imagen-4.0-ultra-generate-001"
-        },
-        "prompt": "=Você é um modelo de visão e geração de imagens especializado em MODA, LOOKS e EDIÇÃO DE ROUPAS.\nSua função é analisar duas imagens (quando existirem):\n\nIMAGEM_BASE \"{{$binary.image_base}}\" → foto do cliente\n\nIMAGEM_REFERÊNCIA \"{{$binary.image_reference}}\" → roupa, peça ou estilo que o cliente quer usar ou aplicar\n\nQuando não houver imagens, gerar a partir do prompt textual\n\n⚙️ Objetivo Geral\n\nGerar uma imagem final realista, elegante e coerente com o pedido do usuário, sempre priorizando:\n\naparência real da pessoa (quando houver IMAGEM_BASE)\n\nforma, textura e estilo da roupa enviada (quando houver IMAGEM_REFERÊNCIA)\n\nintegração natural entre corpo, roupa, luz, sombras e proporções\n\nrespeitar completamente o pedido textual\n\nsempre manter estética profissional, estilo editorial, qualidade fotográfica\n\n🔍 REGRAS DE INTERPRETAÇÃO\n1. Quando tiver IMAGEM_BASE + IMAGEM_REFERÊNCIA → “Juntar as duas”\n\nUse este comportamento:\n\nAnalise cuidadosamente a IMAGEM_BASE (a pessoa):\naparência, pose, iluminação, tom da pele, formato do corpo, cabelos, sombras\n\nAnalise IMAGEM_REFERÊNCIA (a roupa/estilo):\ntecido, cor, textura, caimento, modelagem, botões, gola, mangas etc.\n\nAplique a roupa da referência na pessoa da imagem base\n\nAjuste iluminação e sombras para combinar\n\nAjuste o caimento natural da peça no corpo real\n\nRemova elementos que impeçam o encaixe\n\nPreserve integridade facial (NUNCA alterar o rosto do cliente)\n\nSaída esperada:\n\nA pessoa vestindo a roupa da imagem referência, de forma hiperrealista.\n\n2. Quando tiver apenas IMAGEM_REFERÊNCIA → “Editar ou modificar a roupa”\n\nSe o usuário pedir:\n\n“mude a cor da camisa”\n\n“coloque manga longa”\n\n“deixe mais justa”\n\n“faça versão preta”\n\netc.\n\nEntão:\n\nAnalise a roupa enviada\n\nTransforme a peça conforme o pedido\n\nNão inserir modelos humanos\n\nNão criar corpo novo\n\nApenas editar a roupa com realismo fotográfico\n\nSaída esperada:\n\nA roupa referência editada, mantendo textura realista.\n\n3. Quando tiver apenas IMAGEM_BASE → “Gerar novo look na pessoa”\n\nSe o usuário pedir:\n\n“crie um novo look para mim”\n\n“me coloque usando um vestido preto”\n\n“gere um visual casual para mim”\n\nEntão:\n\nAnalise profundamente a foto do cliente\n\nGere uma roupa completa do zero\n\nAplicada no corpo da pessoa\n\nTotalmente compatível com o pedido textual\n\nSaída esperada:\n\nA pessoa vestindo um look novo, criado pela IA.\n\n4. Quando não existir nenhuma imagem → “Criar look do zero”\n\nSe o usuário pedir:\n\n“monte um look casual feminino minimalista”\n\n“gere um look de festa com brilho”\n\n“crie um outfit para aniversário”\n\nEntão:\n\nCriar modelo humano neutro (não real, não baseado em pessoas reais)\n\nCriar look completo seguindo o estilo pedido\n\nGerar fundo neutro, iluminação profissional\n\nSaída esperada:\n\nLook do zero com modelo genérico, estilo editorial.\n\n🧠 INSTRUÇÕES DE GERAÇÃO\n\nSempre:\n\nrenderizar em alta qualidade\n\nestética realista (nunca caricatura)\n\nmanter fidelidade ao corpo real (quando houver)\n\npreservar textura da roupa editada ou aplicada\n\nmanter proporções naturais\n\najustar sombra, luz, contraste e cor\n\nremover elementos distorcidos\n\nnão adicionar texto na imagem, logos, marcas ou objetos não mencionados",
-        "options": {
-          "binaryPropertyOutput": "edited"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        976,
-        1248
-      ],
-      "id": "84ba2529-88cf-42c2-9ca8-5b3427fb76fa",
-      "name": "Generate an image1",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "Tf06ftYu7cj0QewA",
-          "name": "try2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "operation": "edit",
-        "prompt": "=Transforme somente as roupas da pessoa na imagem base, substituindo o look atual por um novo look descrito pelo usuário.\n\nRegras obrigatórias:\n1. Preserve completamente:\n   - rosto\n   - corpo\n   - idade aparente\n   - tom de pele\n   - formato do corpo\n   - pose e proporções\n   - identidade visual da pessoa\n2. Não altere a fisionomia, não afine corpo, não mude cabelo, não mude altura, não mude expressão.\n3. Aplique o novo look exatamente conforme descrito em:\n   \"{{ $('Edit Fields2').item.json.prompt_final }}\"\n4. O novo look deve parecer uma roupa real, com tecido real, caimento natural e interação real com o corpo.\n5. Cores e estilos devem ser realistas e bem integrados à luz original da foto.\n6. Não gere novos objetos, pessoas ou elementos desnecessários.\n7. O fundo deve permanecer igual ou ser suavemente limpo, mas nunca totalmente substituído.\n8. Mantenha estética fotográfica ultrarrealista; nada de aparência de desenho ou renderização 3D.\n9. Ajuste sombras, dobras e volumes da roupa para se moldarem ao corpo real da pessoa.\n\nObjetivo final:\nGerar a mesma pessoa da imagem base, mas vestindo um novo look completo conforme o usuário pediu.",
-        "images": {
-          "values": [
-            {
-              "binaryPropertyName": "image_base"
-            }
-          ]
-        },
-        "options": {
-          "binaryPropertyOutput": "edited"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1,
-      "position": [
-        944,
-        480
-      ],
-      "id": "29738ac1-ed60-4996-ae31-d0e7d84ebb22",
-      "name": "Edit an image5",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "Tf06ftYu7cj0QewA",
-          "name": "try2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "respondWith": "binary",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.4,
-      "position": [
-        2096,
-        832
-      ],
-      "id": "89a1702e-a534-48e0-8b9b-913e80ec0843",
-      "name": "Respond to Webhook1"
     }
   ],
-  "pinData": {},
   "connections": {
     "Webhook": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "Edit Fields1",
             "type": "main",
             "index": 0
           }
@@ -656,61 +146,7 @@
       "main": [
         [
           {
-            "node": "Switch",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch": {
-      "main": [
-        [
-          {
-            "node": "Edit an image2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
             "node": "Edit an image",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Edit an image1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Generate an image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Generate an image": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit an image1": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook",
             "type": "main",
             "index": 0
           }
@@ -727,135 +163,11 @@
           }
         ]
       ]
-    },
-    "Edit an image2": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Edit Fields2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields2": {
-      "main": [
-        [
-          {
-            "node": "Switch1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch1": {
-      "main": [
-        [
-          {
-            "node": "Edit an image5",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Edit an image3",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Edit an image4",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Generate an image1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Generate an image1": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit an image4": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit an image3": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit an image5": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
-  "active": true,
-  "settings": {
-    "executionOrder": "v1",
-    "saveDataSuccessExecution": "all",
-    "callerPolicy": "workflowsFromSameOwner"
-  },
-  "versionId": "18b00a9a-7400-4ac5-926f-47d6aa94d51a",
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "807138b7646fc3b35fe8d414d5cd61eb6889d95886d54e7341e1a712e0242dc1"
-  },
-  "id": "MAMxoANwzKKUH2r7",
-  "tags": []
+  }
 }
