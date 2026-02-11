@@ -81,14 +81,30 @@ function openAuthModal(mode = 'login') {
 // --- CONTROLE DE ESTADO ---
 
 function updateAuthState(session) {
+    const authElements = document.querySelectorAll('.auth-only');
+
     if (session) {
         isAnonymous = false;
         authOverlay.classList.add('hidden');
         headerAuthMenu.innerHTML = `
+            <button onclick="openAvatarManager()" class="text-[10px] uppercase font-bold tracking-wider text-secondary hover:underline transition-colors mr-2">
+                👤 Meus Bonecos
+            </button>
+            <button onclick="openCloset()" class="text-[10px] uppercase font-bold tracking-wider text-secondary hover:underline transition-colors mr-2">
+                🏠 Meu Closet
+            </button>
+            <button onclick="openHistory()" class="text-[10px] uppercase font-bold tracking-wider text-secondary hover:underline transition-colors mr-2">
+                📜 Histórico
+            </button>
             <button onclick="logout()" class="text-[10px] uppercase tracking-wider text-muted hover:text-secondary transition-colors">
                 Sair
             </button>
         `;
+        // Mostrar elementos apenas para logados (como as Tabs)
+        authElements.forEach(el => {
+            el.classList.remove('hidden');
+            if (el.tagName === 'DIV' && el.classList.contains('auth-only')) el.classList.add('flex');
+        });
     } else {
         isAnonymous = true;
         headerAuthMenu.innerHTML = `
@@ -99,6 +115,11 @@ function updateAuthState(session) {
                 Criar Conta
             </button>
         `;
+        // Esconder elementos exclusivos para logados
+        authElements.forEach(el => {
+            el.classList.add('hidden');
+            if (el.tagName === 'DIV' && el.classList.contains('auth-only')) el.classList.remove('flex');
+        });
     }
     // Notify script.js
     window.dispatchEvent(new CustomEvent('auth:change', { detail: { isAnonymous, session } }));
@@ -143,3 +164,4 @@ window.getAuthState = async () => {
     const { data: { session } } = await supabaseClient.auth.getSession();
     return { isAnonymous, session };
 };
+window.supabaseClient = supabaseClient; // Para que o script.js possa usar

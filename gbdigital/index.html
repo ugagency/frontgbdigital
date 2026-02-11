@@ -144,6 +144,155 @@
     </div>
   </div>
 
+  <!-- Digital Closet Full View (Management) -->
+  <div id="wardrobeFullView" class="fixed inset-0 bg-white z-[150] hidden flex-col animate-fade-in overflow-hidden">
+    <!-- Header Closet -->
+    <header class="p-6 border-b flex items-center justify-between bg-white sticky top-0 z-10">
+      <div>
+        <h2 class="font-serif text-2xl font-bold text-primary">Meu Closet Digital</h2>
+        <p class="text-[10px] text-muted uppercase tracking-[0.2em] mt-1">Gerencie suas peças salvas</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="addClosetItemBtn"
+          class="bg-primary text-white px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-secondary transition-all flex items-center gap-2 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Adicionar Peça
+        </button>
+        <input type="file" id="input-closet-add" accept="image/*" class="hidden" />
+        <button onclick="document.getElementById('wardrobeFullView').classList.add('hidden')"
+          class="bg-gray-100 p-2 rounded-full hover:bg-black hover:text-white transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Content Closet -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-10 bg-bg">
+      <div id="full-wardrobe-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-7xl mx-auto">
+        <!-- Dinâmico -->
+        <div class="animate-pulse bg-gray-200 rounded-2xl aspect-[3/4]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-2xl aspect-[3/4]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-2xl aspect-[3/4]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-2xl aspect-[3/4]"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Avatar Management Full View -->
+  <div id="avatarFullView" class="fixed inset-0 bg-white z-[150] hidden flex-col animate-fade-in overflow-hidden">
+    <!-- Header -->
+    <header class="p-6 border-b flex items-center justify-between bg-white sticky top-0 z-10">
+      <div>
+        <h2 class="font-serif text-2xl font-bold text-primary">Meus Bonecos</h2>
+        <p class="text-[10px] text-muted uppercase tracking-[0.2em] mt-1">Gerencie seus avatares personalizados</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="addAvatarBtn"
+          class="bg-primary text-white px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-secondary transition-all flex items-center gap-2 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Adicionar Boneco
+        </button>
+        <input type="file" id="input-avatar-add" accept="image/*" class="hidden" />
+        <button onclick="document.getElementById('avatarFullView').classList.add('hidden')"
+          class="bg-gray-100 p-2 rounded-full hover:bg-black hover:text-white transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-10 bg-bg">
+      <div id="full-avatar-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-7xl mx-auto">
+        <!-- Dinâmico -->
+        <div class="animate-pulse bg-gray-100 rounded-2xl aspect-[3/4]"></div>
+        <div class="animate-pulse bg-gray-100 rounded-2xl aspect-[3/4]"></div>
+        <div class="animate-pulse bg-gray-100 rounded-2xl aspect-[3/4]"></div>
+        <div class="animate-pulse bg-gray-100 rounded-2xl aspect-[3/4]"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Generation History Full View -->
+  <div id="historyFullView" class="fixed inset-0 bg-white z-[150] hidden flex-col animate-fade-in overflow-hidden">
+    <!-- Header -->
+    <header class="p-6 border-b flex items-center justify-between bg-white sticky top-0 z-10">
+      <div>
+        <h2 class="font-serif text-2xl font-bold text-primary">Meu Histórico</h2>
+        <p class="text-[10px] text-muted uppercase tracking-[0.2em] mt-1">Todas as suas criações salvas</p>
+      </div>
+      <button onclick="document.getElementById('historyFullView').classList.add('hidden')"
+        class="bg-gray-100 p-2 rounded-full hover:bg-black hover:text-white transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-10 bg-bg">
+      <div id="full-history-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <!-- Dinâmico -->
+        <div class="animate-pulse bg-gray-100 rounded-2xl aspect-square"></div>
+        <div class="animate-pulse bg-gray-100 rounded-2xl aspect-square"></div>
+        <div class="animate-pulse bg-gray-100 rounded-2xl aspect-square"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Notification Modal (Styled Alert) -->
+  <div id="notificationModal"
+    class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
+    <div class="bg-surface w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-fade-in text-center p-8">
+      <div id="notificationIcon"
+        class="w-12 h-12 bg-gray-100 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 id="notificationTitle" class="font-serif text-xl font-bold mb-2 text-primary">Aviso</h3>
+      <p id="notificationMessage" class="text-muted text-sm mb-6 leading-relaxed">Mensagem do sistema.</p>
+      <button onclick="document.getElementById('notificationModal').classList.add('hidden')"
+        class="w-full bg-primary text-white py-3 rounded-xl font-bold uppercase tracking-widest text-xs transition-all hover:bg-black shadow-lg">
+        Entendi
+      </button>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal (Styled Confirm) -->
+  <div id="confirmModal"
+    class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-[200] hidden items-center justify-center p-4">
+    <div class="bg-surface w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-fade-in text-center p-8">
+      <div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+      </div>
+      <h3 id="confirmTitle" class="font-serif text-xl font-bold mb-2 text-primary">Tem certeza?</h3>
+      <p id="confirmMessage" class="text-muted text-sm mb-6 leading-relaxed">Esta ação não pode ser desfeita e removerá
+        o item permanentemente.</p>
+      <div class="flex gap-3">
+        <button id="confirmCancelBtn"
+          class="flex-1 bg-gray-100 text-primary py-3 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-gray-200 transition-all">
+          Cancelar
+        </button>
+        <button id="confirmSuccessBtn"
+          class="flex-1 bg-red-500 text-white py-3 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-red-600 shadow-md transition-all">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div id="appContent" class="block">
 
     <div class="max-w-4xl mx-auto px-4 py-8 md:py-12">
@@ -181,42 +330,69 @@
                   <span class="text-xs text-secondary font-medium uppercase tracking-wider">Obrigatório</span>
                 </div>
 
+                <!-- Tabs para Avatar -->
+                <div class="flex border-b border-gray-100 mb-4 auth-only hidden">
+                  <button id="tab-avatar-upload"
+                    class="flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary">Upload
+                    Novo</button>
+                  <button id="tab-avatar-saved"
+                    class="flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent">Meus
+                    Bonecos</button>
+                </div>
+
                 <!-- Area de Upload Estilizada -->
-                <div id="dropzone-main"
-                  class="relative border border-dashed border-gray-300 bg-bg rounded-xl h-64 flex flex-col items-center justify-center cursor-pointer transition-colors hover:bg-gray-50 hover:border-secondary group-hover:border-secondary/50">
+                <div id="section-avatar-upload">
+                  <div id="dropzone-main"
+                    class="relative border border-dashed border-gray-300 bg-bg rounded-xl h-64 flex flex-col items-center justify-center cursor-pointer transition-colors hover:bg-gray-50 hover:border-secondary group-hover:border-secondary/50">
 
-                  <div class="scan-line" id="scan-main"></div> <!-- Efeito Laser -->
+                    <div class="scan-line" id="scan-main"></div> <!-- Efeito Laser -->
 
-                  <img id="preview-main" src=""
-                    class="absolute inset-0 w-full h-full object-cover rounded-xl hidden z-10" />
+                    <img id="preview-main" src=""
+                      class="absolute inset-0 w-full h-full object-cover rounded-xl hidden z-10" />
 
-                  <div id="upload-placeholder-main" class="text-center p-6 z-0 transition-opacity">
-                    <div
-                      class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm text-secondary">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                          d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                          d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
+                    <div id="upload-placeholder-main" class="text-center p-6 z-0 transition-opacity">
+                      <div
+                        class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                          stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </div>
+                      <p class="text-primary font-medium">Toque para adicionar foto</p>
+                      <p class="text-sm text-muted mt-1">Corpo inteiro funciona melhor</p>
                     </div>
-                    <p class="text-primary font-medium">Toque para adicionar foto</p>
-                    <p class="text-sm text-muted mt-1">Corpo inteiro funciona melhor</p>
+
+                    <input id="input-main" name="image_base" type="file" accept="image/*"
+                      class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
+
+                    <!-- Botão Remover Flutuante -->
+                    <button id="remove-main"
+                      class="absolute top-2 right-2 z-30 bg-white/90 backdrop-blur text-red-500 p-2 rounded-full shadow hover:bg-red-50 hidden">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clip-rule="evenodd" />
+                      </svg>
+                    </button>
                   </div>
-
-                  <input id="input-main" name="image_base" type="file" accept="image/*"
-                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" />
-
-                  <!-- Botão Remover Flutuante -->
-                  <button id="remove-main"
-                    class="absolute top-2 right-2 z-30 bg-white/90 backdrop-blur text-red-500 p-2 rounded-full shadow hover:bg-red-50 hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clip-rule="evenodd" />
-                    </svg>
+                  <!-- Botão Salvar Avatar -->
+                  <button id="saveAvatarBtn"
+                    class="hidden w-full mt-3 py-2 text-xs font-bold uppercase tracking-widest text-secondary border border-secondary/30 rounded-lg hover:bg-secondary/5 transition-colors auth-only">
+                    Salvar como Meu Boneco/Avatar
                   </button>
+                </div>
+
+                <!-- Area de Bonecos Salvos (Hidden by default) -->
+                <div id="section-avatar-saved" class="hidden">
+                  <div id="avatar-gallery" class="grid grid-cols-3 gap-2 max-h-64 overflow-y-auto p-1">
+                    <!-- Dinâmico -->
+                    <div class="animate-pulse bg-gray-100 rounded-lg aspect-[3/4]"></div>
+                    <div class="animate-pulse bg-gray-100 rounded-lg aspect-[3/4]"></div>
+                    <div class="animate-pulse bg-gray-100 rounded-lg aspect-[3/4]"></div>
+                  </div>
                 </div>
               </div>
             </section>
@@ -233,6 +409,16 @@
                 <!-- Modos removidos conforme solicitação -->
                 <input type="hidden" name="mode" value="generate" checked />
 
+                <!-- Tabs para Referência -->
+                <div class="flex border-b border-gray-100 mb-4 auth-only hidden">
+                  <button id="tab-wardrobe-upload"
+                    class="flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary">Upload
+                    Novo</button>
+                  <button id="tab-wardrobe-saved"
+                    class="flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent">Meu
+                    Guarda-Roupa</button>
+                </div>
+
                 <!-- Inputs Dinâmicos -->
                 <div class="space-y-4">
                   <!-- Prompt -->
@@ -245,26 +431,45 @@
                   </div>
 
                   <!-- Upload Referência (Mini) -->
-                  <div
-                    class="bg-bg rounded-xl p-3 flex items-center gap-3 border border-transparent hover:border-gray-200 transition-colors">
+                  <div id="section-wardrobe-upload">
                     <div
-                      class="w-12 h-12 bg-white rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border">
-                      <img id="preview-ref" src="" class="w-full h-full object-cover hidden" />
-                      <svg id="icon-ref" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                      </svg>
+                      class="bg-bg rounded-xl p-3 flex items-center gap-3 border border-transparent hover:border-gray-200 transition-colors">
+                      <div
+                        class="w-12 h-12 bg-white rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border">
+                        <img id="preview-ref" src="" class="w-full h-full object-cover hidden" />
+                        <svg id="icon-ref" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium truncate" id="file-ref-name">Adicionar roupa de referência
+                          (Obrigatório)
+                        </p>
+                        <label class="text-xs text-secondary cursor-pointer hover:underline">
+                          Escolher imagem
+                          <input id="input-ref" name="image_reference" type="file" accept="image/*" class="hidden" />
+                        </label>
+                        <button id="remove-ref"
+                          class="text-xs text-red-500 ml-2 hover:underline hidden">Remover</button>
+                      </div>
                     </div>
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm font-medium truncate" id="file-ref-name">Adicionar roupa de referência
-                        (Obrigatório)
-                      </p>
-                      <label class="text-xs text-secondary cursor-pointer hover:underline">
-                        Escolher imagem
-                        <input id="input-ref" name="image_reference" type="file" accept="image/*" class="hidden" />
-                      </label>
-                      <button id="remove-ref" class="text-xs text-red-500 ml-2 hover:underline hidden">Remover</button>
+                    <!-- Botão Salvar no Guarda-Roupa -->
+                    <button id="saveWardrobeBtn"
+                      class="hidden w-full mt-3 py-2 text-xs font-bold uppercase tracking-widest text-secondary border border-secondary/30 rounded-lg hover:bg-secondary/5 transition-colors auth-only">
+                      Salvar no meu Guarda-Roupa
+                    </button>
+                  </div>
+
+                  <!-- Area de Guarda-Roupa Salvo (Hidden by default) -->
+                  <div id="section-wardrobe-saved" class="hidden">
+                    <div id="wardrobe-gallery" class="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto p-1">
+                      <!-- Dinâmico -->
+                      <div class="animate-pulse bg-gray-100 rounded-lg aspect-square"></div>
+                      <div class="animate-pulse bg-gray-100 rounded-lg aspect-square"></div>
+                      <div class="animate-pulse bg-gray-100 rounded-lg aspect-square"></div>
+                      <div class="animate-pulse bg-gray-100 rounded-lg aspect-square"></div>
                     </div>
                   </div>
                 </div>
@@ -429,9 +634,10 @@
       </div>
     </div>
 
-    <script src="auth.js"></script>
-    <script src="script.js"></script>
   </div> <!-- Fim do #appContent -->
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>
