@@ -32,6 +32,11 @@ const regenerateBtn = document.getElementById('regenerateBtn');
 let fileMain = null;
 let fileRef = null;
 
+// --- CONFIGURAÇÃO DE LIMITE ANÔNIMO ---
+const ANON_LIMIT = 3;
+const counterContainer = document.getElementById('anonymousCounter');
+const counterText = document.getElementById('remainingCount');
+
 // --- FUNÇÕES UTILITÁRIAS ---
 
 function updateGenerateState() {
@@ -196,6 +201,23 @@ async function sendGenerate() {
         return;
     }
 
+    // Checar Limite Anônimo
+    const auth = await window.getAuthState();
+    if (auth.isAnonymous) {
+        const count = parseInt(localStorage.getItem('anon_gen_count') || '0');
+        if (count >= ANON_LIMIT) {
+            const limitModal = document.getElementById('limitModal');
+            if (limitModal) {
+                limitModal.classList.remove('hidden');
+                limitModal.classList.add('flex');
+            } else {
+                alert('Você atingiu o limite de 3 gerações gratuitas. Crie uma conta para continuar usando ilimitadamente!');
+                window.location.reload();
+            }
+            return;
+        }
+    }
+
     const fd = new FormData();
     if (fileMain) fd.append('image_base', fileMain, fileMain.name);
     if (fileRef) fd.append('image_reference', fileRef, fileRef.name);
@@ -230,6 +252,15 @@ async function sendGenerate() {
 
         downloadBtn.href = imageUrl;
         downloadBtn.setAttribute("download", `ai-look-${Date.now()}.png`);
+
+        // Incrementa contador se for anônimo
+        const auth = await window.getAuthState();
+        if (auth.isAnonymous) {
+            let count = parseInt(localStorage.getItem('anon_gen_count') || '0');
+            count++;
+            localStorage.setItem('anon_gen_count', count.toString());
+            updateAnonymousUI();
+        }
 
     } catch (err) {
         console.error(err);
@@ -363,5 +394,38 @@ chatInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') sendChatMessage();
 });
 
+// --- FUNÇÕES DE LIMITE ANÔNIMO ---
+
+function updateAnonymousUI() {
+    if (typeof window.getAuthState !== 'function') return;
+
+    window.getAuthState().then(auth => {
+        if (auth.isAnonymous) {
+            const count = parseInt(localStorage.getItem('anon_gen_count') || '0');
+            const remaining = Math.max(0, ANON_LIMIT - count);
+
+            if (counterContainer) counterContainer.classList.remove('hidden');
+            if (counterText) {
+                counterText.textContent = remaining;
+                if (remaining === 0) {
+                    counterText.classList.remove('text-secondary');
+                    counterText.classList.add('text-red-500');
+                    generateBtn.disabled = true;
+                    // Procura o span interno para não perder o ícone se houver
+                    const btnSpan = generateBtn.querySelector('span');
+                    if (btnSpan) btnSpan.textContent = "Limite Atingido";
+                    else generateBtn.textContent = "Limite Atingido";
+                }
+            }
+        } else {
+            if (counterContainer) counterContainer.classList.add('hidden');
+        }
+    });
+}
+
+// Escuta evento de entrada anônima
+window.addEventListener('auth:anonymous', updateAnonymousUI);
+
 // Inicialização
 updateGenerateState();
+updateAnonymousUI();
