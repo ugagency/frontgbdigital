@@ -122,3 +122,46 @@ body {
 .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
 }
+
+/* --- WHEEL PICKER STYLES --- */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-up {
+    animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.snap-y {
+    scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+}
+
+.snap-center {
+    scroll-snap-align: center;
+}
+
+/* Efeito de profundidade para o rolete */
+.wheel-item {
+    transition: transform 0.2s, opacity 0.2s;
+    transform-style: preserve-3d;
+}
+
+/* Garante que o modal se adapte a telas maiores */
+@media (min-width: 768px) {
+    #wheelPickerModal {
+        align-items: center !important;
+    }
+
+    #wheelPickerModal>div:last-child {
+        border-radius: 24px !important;
+        max-width: 400px;
+        margin-bottom: 0;
+    }
+}

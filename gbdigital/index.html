@@ -431,13 +431,6 @@
                       </div>
                       <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Robusto</p>
                     </div>
-                    <div onclick="setManequin('male_tall')" class="group cursor-pointer">
-                      <div
-                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
-                        <img id="img_male_tall" src="" class="w-full h-full object-cover">
-                      </div>
-                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Alto</p>
-                    </div>
                   </div>
 
                   <!-- Grid Feminino (Hidden) -->
@@ -462,13 +455,6 @@
                         <img id="img_female_robust" src="" class="w-full h-full object-cover">
                       </div>
                       <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Robusta</p>
-                    </div>
-                    <div onclick="setManequin('female_tall')" class="group cursor-pointer">
-                      <div
-                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
-                        <img id="img_female_tall" src="" class="w-full h-full object-cover">
-                      </div>
-                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Alta</p>
                     </div>
                   </div>
                 </div>
@@ -500,13 +486,134 @@
                 <!-- Inputs Dinâmicos -->
                 <div class="space-y-4">
                   <!-- Prompt -->
-                  <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-2">Instrução para a
-                      IA</label>
-                    <textarea id="prompt" rows="3"
-                      placeholder="Ex: Crie um look elegante para um casamento de dia em sítio. Use tons pastéis."
-                      class="w-full bg-bg border-0 rounded-xl p-4 text-primary placeholder-gray-400 focus:ring-2 focus:ring-secondary/50 resize-none"></textarea>
+                  <!-- Resumo dos Seletores (Clica para abrir Rolete) -->
+                  <div id="ai-selectors-summary" onclick="openWheelPicker()"
+                    class="bg-bg border-2 border-transparent hover:border-secondary/30 rounded-xl p-4 cursor-pointer transition-all flex items-center justify-between group">
+                    <div class="flex gap-4">
+                      <div class="text-center">
+                        <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Momento</p>
+                        <p id="summary-momento" class="text-xs font-bold text-primary">Dia</p>
+                      </div>
+                      <div class="w-[1px] h-8 bg-gray-200"></div>
+                      <div class="text-center">
+                        <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Clima</p>
+                        <p id="summary-clima" class="text-xs font-bold text-primary">Calor</p>
+                      </div>
+                      <div class="w-[1px] h-8 bg-gray-200"></div>
+                      <div class="text-center">
+                        <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Formalidade</p>
+                        <p id="summary-formalidade" class="text-xs font-bold text-primary">1</p>
+                      </div>
+                      <div class="w-[1px] h-8 bg-gray-200"></div>
+                      <div class="text-center">
+                        <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Estilo</p>
+                        <p id="summary-estilo" class="text-xs font-bold text-primary">Old Money</p>
+                      </div>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4 text-muted group-hover:text-secondary transition-colors" fill="none"
+                      viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
                   </div>
+
+                  <!-- Modal Rolete iOS (Hidden) -->
+                  <div id="wheelPickerModal" class="fixed inset-0 z-[10000] hidden flex items-end justify-center">
+                    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeWheelPicker()"></div>
+                    <div class="relative w-full max-w-md bg-white rounded-t-3xl shadow-2xl p-6 animate-slide-up">
+                      <div class="flex items-center justify-between mb-6">
+                        <button onclick="closeWheelPicker()"
+                          class="text-xs font-bold text-muted uppercase tracking-widest">Cancelar</button>
+                        <h3 class="text-xs font-black uppercase tracking-[0.2em] text-primary">Configurar Look</h3>
+                        <button onclick="confirmWheelSelection()"
+                          class="text-xs font-bold text-secondary uppercase tracking-widest">OK</button>
+                      </div>
+
+                      <div class="flex gap-1 h-48 relative overflow-hidden">
+                        <!-- Máscaras de Gradiente -->
+                        <div
+                          class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none">
+                        </div>
+                        <div
+                          class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none">
+                        </div>
+                        <!-- Linha de Seleção Focada -->
+                        <div
+                          class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-10 border-y border-gray-100 bg-gray-50/50 pointer-events-none">
+                        </div>
+
+                        <!-- Rolete Momento -->
+                        <div
+                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20 bg-gray-50/20"
+                          id="wheel-momento">
+                          <div class="h-20 shrink-0"></div> <!-- Padding superior maior -->
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 transition-all wheel-item"
+                            data-val="Dia">Dia</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 transition-all wheel-item"
+                            data-val="Tarde">Tarde</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 transition-all wheel-item"
+                            data-val="Noite">Noite</div>
+                          <div class="h-20 shrink-0"></div> <!-- Padding inferior maior -->
+                        </div>
+
+                        <!-- Rolete Clima -->
+                        <div
+                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20"
+                          id="wheel-clima">
+                          <div class="h-20 shrink-0"></div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Calor">Calor</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Frio">Frio</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Ameno">Ameno</div>
+                          <div class="h-20 shrink-0"></div>
+                        </div>
+
+                        <!-- Rolete Formalidade -->
+                        <div
+                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20 bg-gray-50/20"
+                          id="wheel-formalidade">
+                          <div class="h-20 shrink-0"></div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="1">1</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="2">2</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="3">3</div>
+                          <div class="h-20 shrink-0"></div>
+                        </div>
+
+                        <!-- Rolete Estilo -->
+                        <div
+                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20"
+                          id="wheel-estilo">
+                          <div class="h-20 shrink-0"></div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Old Money">Old Money</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Atemporal">Atemporal</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Athleisure">Athleisure</div>
+                          <div class="h-20 shrink-0"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <textarea id="prompt" class="hidden"></textarea>
 
                   <!-- Upload Referência (Mini) -->
                   <div id="section-wardrobe-upload">

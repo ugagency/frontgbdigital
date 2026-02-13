@@ -97,6 +97,93 @@ function showConfirm(message, title = 'Tem certeza?') {
     });
 }
 
+// --- LOGICA DO ROLETE (WHEEL PICKER) ---
+const wheelModal = document.getElementById('wheelPickerModal');
+const summaryMomento = document.getElementById('summary-momento');
+const summaryClima = document.getElementById('summary-clima');
+const summaryFormalidade = document.getElementById('summary-formalidade');
+const summaryEstilo = document.getElementById('summary-estilo');
+
+const currentWheelSelection = { momento: 'Dia', clima: 'Calor', formalidade: '1', estilo: 'Old Money' };
+
+function openWheelPicker() {
+    if (!wheelModal) return;
+    wheelModal.classList.remove('hidden');
+    // Sincronizar roletes com estado atual ao abrir
+    syncWheel('wheel-momento', currentWheelSelection.momento);
+    syncWheel('wheel-clima', currentWheelSelection.clima);
+    syncWheel('wheel-formalidade', currentWheelSelection.formalidade);
+    syncWheel('wheel-estilo', currentWheelSelection.estilo);
+}
+
+function closeWheelPicker() {
+    if (wheelModal) wheelModal.classList.add('hidden');
+}
+
+function syncWheel(id, val) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const item = Array.from(el.children).find(c => c.getAttribute('data-val') === val);
+    if (item) {
+        el.scrollTop = item.offsetTop - el.offsetTop - 80; // Centraliza aprox.
+    }
+}
+
+function confirmWheelSelection() {
+    const m = getCenterValue('wheel-momento');
+    const c = getCenterValue('wheel-clima');
+    const f = getCenterValue('wheel-formalidade');
+    const e = getCenterValue('wheel-estilo');
+
+    currentWheelSelection.momento = m;
+    currentWheelSelection.clima = c;
+    currentWheelSelection.formalidade = f;
+    currentWheelSelection.estilo = e;
+
+    if (summaryMomento) summaryMomento.innerText = m;
+    if (summaryClima) summaryClima.innerText = c;
+    if (summaryFormalidade) summaryFormalidade.innerText = f;
+    if (summaryEstilo) summaryEstilo.innerText = e;
+
+    closeWheelPicker();
+    updateGenerateState();
+}
+function updateVisuals(el) {
+    const center = el.scrollTop + el.offsetHeight / 2;
+    Array.from(el.querySelectorAll('.wheel-item')).forEach(child => {
+        const childCenter = child.offsetTop - el.offsetTop + child.offsetHeight / 2;
+        const dist = Math.abs(childCenter - center);
+        const ratio = Math.max(0, 1 - dist / 110);
+        child.style.opacity = 0.3 + (ratio * 0.7);
+        child.style.transform = `scale(${0.8 + (ratio * 0.2)}) rotateX(${(childCenter - center) / 1.5}deg)`;
+    });
+}
+
+function getCenterValue(id) {
+    const el = document.getElementById(id);
+    if (!el) return null;
+    const center = el.scrollTop + el.offsetHeight / 2;
+    let closest = null;
+    let minDiff = Infinity;
+
+    Array.from(el.querySelectorAll('.wheel-item')).forEach(child => {
+        const val = child.getAttribute('data-val');
+        const childCenter = child.offsetTop - el.offsetTop + child.offsetHeight / 2;
+        const diff = Math.abs(childCenter - center);
+        if (diff < minDiff) {
+            minDiff = diff;
+            closest = val;
+        }
+    });
+    return closest;
+}
+
+// Adicionar ouvintes de scroll para efeito visual em tempo real
+['wheel-momento', 'wheel-clima', 'wheel-formalidade', 'wheel-estilo'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.onscroll = () => updateVisuals(el);
+});
+
 // --- CLOSET DIGITAL ---
 function openCloset() {
     const modal = document.getElementById('wardrobeFullView');
@@ -528,24 +615,13 @@ async function sendGenerate() {
         loadingOverlay?.classList.remove('hidden');
         loadingOverlay?.classList.add('flex');
 
+        // Constrói prompt final a partir dos seletores do rolete
+        const finalPrompt = `Modo: Gerar Look, Momento: ${currentWheelSelection.momento}, Clima: ${currentWheelSelection.clima}, Nível de Formalidade: ${currentWheelSelection.formalidade}, Estilo: ${currentWheelSelection.estilo}`;
+
         const fd = new FormData();
-
-        // Helper: Converte URL em Blob para garantir envio binário (n8n compatível)
-        const getBlob = async (input) => {
-            if (typeof input === 'string') {
-                const response = await fetch(input);
-                if (!response.ok) throw new Error("Falha ao carregar imagem salva.");
-                return await response.blob();
-            }
-            return input; // Já é um objeto File/Blob do input
-        };
-
-        const blobMain = await getBlob(fileMain);
-        const blobRef = await getBlob(fileRef);
-
-        fd.append('image_base', blobMain, 'image_base.png');
-        fd.append('image_reference', blobRef, 'image_ref.png');
-        fd.append('prompt', promptEl?.value || '');
+        fd.append('image_base', await (async () => { if (typeof fileMain === 'string') { const r = await fetch(fileMain); return await r.blob(); } return fileMain; })(), 'image_base.png');
+        fd.append('image_reference', await (async () => { if (typeof fileRef === 'string') { const r = await fetch(fileRef); return await r.blob(); } return fileRef; })(), 'image_ref.png');
+        fd.append('prompt', finalPrompt);
         fd.append('mode', 'generate');
 
         console.log("Enviando para Webhook:", webhookUrl);
