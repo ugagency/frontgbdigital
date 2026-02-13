@@ -31,8 +31,10 @@ const wardrobeGallery = document.getElementById('wardrobe-gallery');
 // Tabs
 const tabAvatarUpload = document.getElementById('tab-avatar-upload');
 const tabAvatarSaved = document.getElementById('tab-avatar-saved');
+const tabAvatarManequin = document.getElementById('tab-avatar-manequin');
 const sectionAvatarUpload = document.getElementById('section-avatar-upload');
 const sectionAvatarSaved = document.getElementById('section-avatar-saved');
+const sectionAvatarManequin = document.getElementById('section-avatar-manequin');
 const tabWardrobeUpload = document.getElementById('tab-wardrobe-upload');
 const tabWardrobeSaved = document.getElementById('tab-wardrobe-saved');
 const sectionWardrobeUpload = document.getElementById('section-wardrobe-upload');
@@ -236,6 +238,64 @@ function updateGenerateState() {
     }
 }
 
+// --- CONFIGURAÇÃO DE MANEQUINS ---
+const MANEQUIN_URLS = {
+    male_athletic: 'manequins/male_athletic.png',
+    male_average: 'manequins/male_average.png',
+    male_robust: 'manequins/male_robust.png',
+    female_athletic: 'manequins/female_athletic.png',
+    female_average: 'manequins/female_average.png',
+    female_robust: 'manequins/female_robust.png'
+};
+
+// Injetar caminhos dos artifacts se disponíveis
+window.ManequinPaths = {};
+
+function initManequins(paths) {
+    window.ManequinPaths = paths;
+    Object.keys(paths).forEach(key => {
+        const img = document.getElementById(`img_${key}`);
+        if (img) img.src = paths[key];
+    });
+}
+
+function filterManequin(gender) {
+    const btnM = document.getElementById('btn-manequin-male');
+    const btnF = document.getElementById('btn-manequin-female');
+    const gridM = document.getElementById('grid-manequin-male');
+    const gridF = document.getElementById('grid-manequin-female');
+
+    if (gender === 'male') {
+        btnM.className = 'flex-1 py-1.5 text-[10px] font-bold uppercase tracking-widest bg-primary text-white rounded-lg transition-all';
+        btnF.className = 'flex-1 py-1.5 text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-muted rounded-lg hover:bg-gray-200 transition-all';
+        gridM.classList.remove('hidden');
+        gridF.classList.add('hidden');
+    } else {
+        btnF.className = 'flex-1 py-1.5 text-[10px] font-bold uppercase tracking-widest bg-primary text-white rounded-lg transition-all';
+        btnM.className = 'flex-1 py-1.5 text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-muted rounded-lg hover:bg-gray-200 transition-all';
+        gridF.classList.remove('hidden');
+        gridM.classList.add('hidden');
+    }
+}
+
+async function setManequin(key) {
+    const url = window.ManequinPaths[key] || MANEQUIN_URLS[key];
+    try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        fileMain = new File([blob], `${key}.png`, { type: 'image/png' });
+        previewMain.src = url;
+        previewMain.classList.remove('hidden');
+        placeholderMain?.classList.add('hidden');
+        removeMain?.classList.remove('hidden');
+        saveAvatarBtn?.classList.add('hidden'); // Não salva manequim genérico nos avatares
+        updateGenerateState();
+    } catch (e) {
+        console.error("Erro ao carregar manequim:", e);
+        showAlert("Erro ao carregar o manequim selecionado.");
+    }
+}
+
 function handleFileSelection(file, type) {
     if (!file) return;
     const url = URL.createObjectURL(file);
@@ -403,7 +463,12 @@ inputMain?.addEventListener('change', e => handleFileSelection(e.target.files[0]
 inputRef?.addEventListener('change', e => handleFileSelection(e.target.files[0], 'ref'));
 if (removeMain) removeMain.onclick = () => { fileMain = null; previewMain.classList.add('hidden'); placeholderMain?.classList.remove('hidden'); removeMain.classList.add('hidden'); saveAvatarBtn?.classList.add('hidden'); updateGenerateState(); };
 if (removeRef) removeRef.onclick = () => { fileRef = null; previewRef.classList.add('hidden'); iconRef?.classList.remove('hidden'); if (fileRefName) fileRefName.textContent = 'Adicionar roupa'; removeRef.classList.add('hidden'); saveWardrobeBtn?.classList.add('hidden'); updateGenerateState(); };
-if (resetBtn) resetBtn.onclick = () => { removeMain?.click(); removeRef?.click(); if (promptEl) promptEl.value = ''; resultSection?.classList.add('hidden'); };
+if (resetBtn) resetBtn.onclick = () => {
+    removeMain?.click();
+    removeRef?.click();
+    if (promptEl) promptEl.value = '';
+    resultSection?.classList.add('hidden');
+};
 
 if (addClosetItemBtn) addClosetItemBtn.onclick = () => inputClosetAdd?.click();
 if (inputClosetAdd) inputClosetAdd.onchange = e => handleClosetAdd(e.target.files[0]);
@@ -417,18 +482,39 @@ function switchTab(type, target) {
     const isAv = type === 'avatar';
     const tabU = isAv ? tabAvatarUpload : tabWardrobeUpload;
     const tabS = isAv ? tabAvatarSaved : tabWardrobeSaved;
+    const tabM = isAv ? tabAvatarManequin : null;
+
     const secU = isAv ? sectionAvatarUpload : sectionWardrobeUpload;
     const secS = isAv ? sectionAvatarSaved : sectionWardrobeSaved;
+    const secM = isAv ? sectionAvatarManequin : null;
+
     if (!tabU || !tabS) return;
-    tabU.className = target === 'upload' ? 'flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary' : 'flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent';
-    tabS.className = target === 'saved' ? 'flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary' : 'flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent';
-    secU?.classList.toggle('hidden', target !== 'upload');
-    secS?.classList.toggle('hidden', target !== 'saved');
-    if (target === 'saved') isAv ? loadAvatars() : loadWardrobe();
+
+    // Reset classes
+    [tabU, tabS, tabM].filter(Boolean).forEach(t => {
+        t.className = 'flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent';
+    });
+    [secU, secS, secM].filter(Boolean).forEach(s => {
+        s.classList.add('hidden');
+    });
+
+    // Set active
+    if (target === 'upload') {
+        tabU.className = 'flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary';
+        secU.classList.remove('hidden');
+    } else if (target === 'saved') {
+        tabS.className = 'flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary';
+        secS.classList.remove('hidden');
+        isAv ? loadAvatars() : loadWardrobe();
+    } else if (target === 'manequin' && tabM) {
+        tabM.className = 'flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary';
+        secM.classList.remove('hidden');
+    }
 }
 
 tabAvatarUpload && (tabAvatarUpload.onclick = () => switchTab('avatar', 'upload'));
 tabAvatarSaved && (tabAvatarSaved.onclick = () => switchTab('avatar', 'saved'));
+tabAvatarManequin && (tabAvatarManequin.onclick = () => switchTab('avatar', 'manequin'));
 tabWardrobeUpload && (tabWardrobeUpload.onclick = () => switchTab('wardrobe', 'upload'));
 tabWardrobeSaved && (tabWardrobeSaved.onclick = () => switchTab('wardrobe', 'saved'));
 
@@ -533,3 +619,13 @@ window.addEventListener('auth:change', () => {
     });
 });
 updateGenerateState();
+
+// Inicialização de Modelos (Usando caminhos relativos na pasta manequins/)
+initManequins({
+    male_athletic: 'manequins/male_athletic.png',
+    male_average: 'manequins/male_average.png',
+    male_robust: 'manequins/male_robust.png',
+    female_athletic: 'manequins/female_athletic.png',
+    female_average: 'manequins/female_average.png',
+    female_robust: 'manequins/female_robust.png'
+});

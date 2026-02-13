@@ -333,11 +333,14 @@
                 <!-- Tabs para Avatar -->
                 <div class="flex border-b border-gray-100 mb-4 auth-only hidden">
                   <button id="tab-avatar-upload"
-                    class="flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary">Upload
+                    class="flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary">Upload
                     Novo</button>
                   <button id="tab-avatar-saved"
-                    class="flex-1 pb-2 text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent">Meus
+                    class="flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent">Meus
                     Bonecos</button>
+                  <button id="tab-avatar-manequin"
+                    class="flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent">Manequim
+                    Pronto</button>
                 </div>
 
                 <!-- Area de Upload Estilizada -->
@@ -392,6 +395,81 @@
                     <div class="animate-pulse bg-gray-100 rounded-lg aspect-[3/4]"></div>
                     <div class="animate-pulse bg-gray-100 rounded-lg aspect-[3/4]"></div>
                     <div class="animate-pulse bg-gray-100 rounded-lg aspect-[3/4]"></div>
+                  </div>
+                </div>
+
+                <!-- Area de Manequins Prontos (Hidden by default) -->
+                <div id="section-avatar-manequin" class="hidden">
+                  <!-- Filtro de Gênero -->
+                  <div class="flex gap-2 mb-4">
+                    <button id="btn-manequin-male" onclick="filterManequin('male')"
+                      class="flex-1 py-1.5 text-[10px] font-bold uppercase tracking-widest bg-primary text-white rounded-lg transition-all">Masculino</button>
+                    <button id="btn-manequin-female" onclick="filterManequin('female')"
+                      class="flex-1 py-1.5 text-[10px] font-bold uppercase tracking-widest bg-gray-100 text-muted rounded-lg hover:bg-gray-200 transition-all">Feminino</button>
+                  </div>
+
+                  <!-- Grid Masculino -->
+                  <div id="grid-manequin-male" class="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto p-1">
+                    <div onclick="setManequin('male_athletic')" class="group cursor-pointer">
+                      <div
+                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
+                        <img id="img_male_athletic" src="" class="w-full h-full object-cover">
+                      </div>
+                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Atlético</p>
+                    </div>
+                    <div onclick="setManequin('male_average')" class="group cursor-pointer">
+                      <div
+                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
+                        <img id="img_male_average" src="" class="w-full h-full object-cover">
+                      </div>
+                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Médio</p>
+                    </div>
+                    <div onclick="setManequin('male_robust')" class="group cursor-pointer">
+                      <div
+                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
+                        <img id="img_male_robust" src="" class="w-full h-full object-cover">
+                      </div>
+                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Robusto</p>
+                    </div>
+                    <div onclick="setManequin('male_tall')" class="group cursor-pointer">
+                      <div
+                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
+                        <img id="img_male_tall" src="" class="w-full h-full object-cover">
+                      </div>
+                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Alto</p>
+                    </div>
+                  </div>
+
+                  <!-- Grid Feminino (Hidden) -->
+                  <div id="grid-manequin-female" class="hidden grid grid-cols-2 gap-2 max-h-64 overflow-y-auto p-1">
+                    <div onclick="setManequin('female_athletic')" class="group cursor-pointer">
+                      <div
+                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
+                        <img id="img_female_athletic" src="" class="w-full h-full object-cover">
+                      </div>
+                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Atlética</p>
+                    </div>
+                    <div onclick="setManequin('female_average')" class="group cursor-pointer">
+                      <div
+                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
+                        <img id="img_female_average" src="" class="w-full h-full object-cover">
+                      </div>
+                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Média</p>
+                    </div>
+                    <div onclick="setManequin('female_robust')" class="group cursor-pointer">
+                      <div
+                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
+                        <img id="img_female_robust" src="" class="w-full h-full object-cover">
+                      </div>
+                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Robusta</p>
+                    </div>
+                    <div onclick="setManequin('female_tall')" class="group cursor-pointer">
+                      <div
+                        class="aspect-[3/4] rounded-lg overflow-hidden bg-gray-50 border-2 border-transparent group-hover:border-secondary transition-all mb-1 relative">
+                        <img id="img_female_tall" src="" class="w-full h-full object-cover">
+                      </div>
+                      <p class="text-center font-bold text-[8px] uppercase tracking-widest text-primary">Alta</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -633,6 +711,7 @@
         </div>
       </div>
     </div>
+
 
   </div> <!-- Fim do #appContent -->
 
