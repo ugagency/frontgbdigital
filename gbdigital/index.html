@@ -486,23 +486,28 @@
                   <!-- Resumo dos Seletores (Clica para abrir Rolete) -->
                   <div id="ai-selectors-summary" onclick="openWheelPicker()"
                     class="bg-bg border-2 border-transparent hover:border-secondary/30 rounded-xl p-4 cursor-pointer transition-all flex items-center justify-between group">
-                    <div class="flex gap-4">
-                      <div class="text-center">
+                    <div class="flex gap-4 overflow-x-auto no-scrollbar">
+                      <div class="text-center min-w-[50px]">
+                        <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Contexto</p>
+                        <p id="summary-contexto" class="text-xs font-bold text-primary">Jantar</p>
+                      </div>
+                      <div class="w-[1px] h-8 bg-gray-200"></div>
+                      <div class="text-center min-w-[50px]">
                         <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Momento</p>
                         <p id="summary-momento" class="text-xs font-bold text-primary">Dia</p>
                       </div>
                       <div class="w-[1px] h-8 bg-gray-200"></div>
-                      <div class="text-center">
+                      <div class="text-center min-w-[50px]">
                         <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Clima</p>
                         <p id="summary-clima" class="text-xs font-bold text-primary">Calor</p>
                       </div>
                       <div class="w-[1px] h-8 bg-gray-200"></div>
-                      <div class="text-center">
+                      <div class="text-center min-w-[50px]">
                         <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Formalidade</p>
                         <p id="summary-formalidade" class="text-xs font-bold text-primary">1</p>
                       </div>
                       <div class="w-[1px] h-8 bg-gray-200"></div>
-                      <div class="text-center">
+                      <div class="text-center min-w-[60px]">
                         <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Estilo</p>
                         <p id="summary-estilo" class="text-xs font-bold text-primary">Old Money</p>
                       </div>
@@ -517,7 +522,7 @@
                   <!-- Modal Rolete iOS (Hidden) -->
                   <div id="wheelPickerModal" class="fixed inset-0 z-[10000] hidden flex items-end justify-center">
                     <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeWheelPicker()"></div>
-                    <div class="relative w-full max-w-md bg-white rounded-t-3xl shadow-2xl p-6 animate-slide-up">
+                    <div class="relative w-full max-w-2xl bg-white rounded-t-3xl shadow-2xl p-6 animate-slide-up">
                       <div class="flex items-center justify-between mb-6">
                         <button onclick="closeWheelPicker()"
                           class="text-xs font-bold text-muted uppercase tracking-widest">Cancelar</button>
@@ -537,6 +542,29 @@
                         <!-- Linha de Seleção Focada -->
                         <div
                           class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-10 border-y border-gray-100 bg-gray-50/50 pointer-events-none">
+                        </div>
+
+                        <!-- Rolete Contexto -->
+                        <div
+                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20"
+                          id="wheel-contexto">
+                          <div class="h-20 shrink-0"></div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Jantar">Jantar</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Trabalho">Trabalho</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Evento Formal">Evento Formal</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Praia">Praia</div>
+                          <div
+                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
+                            data-val="Casual">Casual</div>
+                          <div class="h-20 shrink-0"></div>
                         </div>
 
                         <!-- Rolete Momento -->
