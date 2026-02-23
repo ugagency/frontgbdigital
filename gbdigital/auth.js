@@ -141,7 +141,7 @@ function updateAuthState(session) {
             if (el.tagName === 'DIV' && el.classList.contains('auth-only')) el.classList.remove('flex');
         });
     }
-    
+
     // Animate in
     setTimeout(() => {
         mainNav.classList.add('nav-visible');
@@ -174,6 +174,45 @@ authSuccessBtn.addEventListener('click', () => {
     authForm.classList.remove('hidden');
     authSuccess.classList.add('hidden');
     toggleAuthMode.click();
+});
+
+// Novos Elementos Improved Auth
+const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+const eyeIconOpen = document.getElementById('eyeIconOpen');
+const eyeIconClosed = document.getElementById('eyeIconClosed');
+const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+
+// Alternar Visibilidade da Senha
+togglePasswordBtn?.addEventListener('click', () => {
+    const isPassword = authPassword.type === 'password';
+    authPassword.type = isPassword ? 'text' : 'password';
+    eyeIconOpen.classList.toggle('hidden', !isPassword);
+    eyeIconClosed.classList.toggle('hidden', isPassword);
+});
+
+// Esqueci Minha Senha
+forgotPasswordBtn?.addEventListener('click', async () => {
+    const email = authEmail.value;
+    if (!email) {
+        authError.textContent = "Por favor, digite seu e-mail primeiro.";
+        authError.classList.remove('hidden');
+        return;
+    }
+
+    try {
+        const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+            redirectTo: window.location.href,
+        });
+        if (error) throw error;
+
+        notificationTitle.textContent = "Recuperação de Senha";
+        notificationMessage.textContent = "Se este e-mail estiver cadastrado, você receberá um link para redefinir sua senha em instantes.";
+        notificationModal.classList.remove('hidden');
+        notificationModal.classList.add('flex');
+    } catch (err) {
+        authError.textContent = err.message;
+        authError.classList.remove('hidden');
+    }
 });
 
 supabaseClient.auth.onAuthStateChange((event, session) => {
