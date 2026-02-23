@@ -1,5 +1,5 @@
 // script.js - Lógica AI Look (Versão v5.0 - Full Management & History)
-const webhookUrl = 'https://automacoes-n8n.infrassys.com/webhook/gbdigital';
+const webhookUrl = 'https://automacoes-n8n.infrassys.com/webhook-test/ailooks';
 const chatWebhookUrl = 'https://automacoes-n8n.infrassys.com/webhook/webchat';
 
 // Elementos da Interface
@@ -621,8 +621,9 @@ async function sendGenerate() {
         loadingOverlay?.classList.remove('hidden');
         loadingOverlay?.classList.add('flex');
 
-        // Constrói prompt final a partir dos seletores do rolete
-        const finalPrompt = `Modo: Gerar Look, Contexto: ${currentWheelSelection.contexto}, Momento: ${currentWheelSelection.momento}, Clima: ${currentWheelSelection.clima}, Nível de Formalidade: ${currentWheelSelection.formalidade}, Estilo: ${currentWheelSelection.estilo}`;
+        // Constrói prompt final a partir dos seletores do rolete e opção de armário
+        const prioritizeStatus = 'on'; // Fixado como ON conforme solicitado
+        const finalPrompt = `Modo: Gerar Look, Contexto: ${currentWheelSelection.contexto}, Momento: ${currentWheelSelection.momento}, Clima: ${currentWheelSelection.clima}, Nível de Formalidade: ${currentWheelSelection.formalidade}, Estilo: ${currentWheelSelection.estilo}, Priorizar meu armário: ${prioritizeStatus}`;
 
         const fd = new FormData();
         fd.append('image_base', await (async () => { if (typeof fileMain === 'string') { const r = await fetch(fileMain); return await r.blob(); } return fileMain; })(), 'image_base.png');
@@ -638,16 +639,68 @@ async function sendGenerate() {
             throw new Error(`Servidor retornou erro ${res.status}: ${errText}`);
         }
 
-        const blob = await res.blob();
-        if (blob.size === 0) throw new Error("A IA retornou uma imagem vazia.");
+        // Detecta o tipo de conteúdo para decidir como ler o stream
+        const contentType = res.headers.get("content-type") || "";
+        console.log("Headers recebidos:", Object.fromEntries(res.headers.entries()));
+        console.log("Content-Type detectado:", contentType);
 
-        const finalUrl = URL.createObjectURL(blob);
-        resultImage.src = finalUrl;
+        let blob;
+        let finalUrl;
+
+        try {
+            if (contentType.toLowerCase().includes("application/json")) {
+                console.log("Iniciando processamento JSON...");
+                const data = await res.json();
+                const item = Array.isArray(data) ? data[0] : data;
+                const edited = item.edited || item.Edited;
+                const justificativa = item.justificativa || item.Justificativa;
+
+                // Chat em bloco isolado para não quebrar a imagem
+                try {
+                    if (justificativa) {
+                        console.log("Justificativa no JSON encontrada.");
+                        addChatMessage(justificativa, 'ai', true);
+                    }
+                } catch (chatErr) { console.error("Erro ao adicionar chat (JSON):", chatErr); }
+
+                if (edited) {
+                    finalUrl = edited.startsWith('http') || edited.startsWith('data:') ? edited : `data:image/png;base64,${edited}`;
+                    resultImage.src = finalUrl;
+                    downloadBtn.href = finalUrl;
+                    console.log("Imagem configurada a partir de JSON.");
+                    const r = await fetch(finalUrl);
+                    blob = await r.blob();
+                }
+            } else {
+                console.log("Iniciando processamento BINÁRIO...");
+                // Headers em bloco isolado
+                try {
+                    const hJust = res.headers.get("x-justificativa") || res.headers.get("justificativa");
+                    if (hJust) {
+                        const decoded = decodeURIComponent(hJust.replace(/\+/g, ' '));
+                        addChatMessage(decoded, 'ai', true);
+                    }
+                } catch (headerErr) { console.error("Erro nos headers/chat (Binário):", headerErr); }
+
+                blob = await res.blob();
+                console.log("Blob binário pronto, tamanho:", blob.size);
+                if (blob.size === 0) throw new Error("A IA retornou um arquivo vazio.");
+
+                finalUrl = URL.createObjectURL(blob);
+                resultImage.src = finalUrl;
+                downloadBtn.href = finalUrl;
+                console.log("Imagem configurada a partir de Blob binário.");
+            }
+        } catch (err) {
+            console.error("Erro crítico no processamento da resposta:", err);
+            throw err;
+        }
+
+        console.log("Exibindo seção de resultado (#resultSection)");
         resultSection.classList.remove('hidden');
-        downloadBtn.href = finalUrl;
 
         // Permanentemente Salva no Histórico se estiver logado
-        if (!auth.isAnonymous && auth.session) {
+        if (!auth.isAnonymous && auth.session && blob) {
             try {
                 const historyUrl = await uploadToSupabase(blob, 'history');
                 await window.supabaseClient.from('user_history').insert([{
@@ -676,20 +729,103 @@ regenerateBtn && (regenerateBtn.onclick = sendGenerate);
 // --- CHAT ---
 const chatInput = document.getElementById('chat-input');
 const sendChatBtn = document.getElementById('send-chat-btn');
+const chatMessagesContainer = document.getElementById('chat-messages');
+
+/**
+ * Adiciona uma mensagem ao chat
+ * @param {string} content - Texto da mensagem
+ * @param {string} sender - 'user' ou 'ai'
+ * @param {boolean} isAI - Se é uma mensagem da consultora
+ */
+function addChatMessage(content, sender, isAI = false) {
+    if (!chatMessagesContainer) return;
+
+    const div = document.createElement('div');
+    div.className = isAI ? 'flex justify-start mb-4 animate-fade-in' : 'flex justify-end mb-4 animate-fade-in';
+
+    if (isAI) {
+        // Divide o conteúdo em parágrafos (considerando \n\n como separador)
+        const paragraphs = content.split(/\n\s*\n/).filter(p => p.trim());
+
+        if (paragraphs.length > 1) {
+            const firstPara = paragraphs[0];
+            const restOfContent = paragraphs.slice(1).join('\n\n');
+
+            div.innerHTML = `
+                <div class="bg-white border border-gray-100 text-gray-800 rounded-2xl rounded-tl-none py-3 px-4 text-sm shadow-sm max-w-[85%]">
+                    <p class="font-serif font-bold text-gray-900 mb-1">Consultoria AI ✨</p>
+                    <div class="leading-relaxed">${firstPara.replace(/\n/g, '<br>')}</div>
+                    
+                    <div class="hidden-content hidden mt-2 pt-2 border-t border-gray-50 animate-fade-in">
+                        <div class="leading-relaxed">${restOfContent.replace(/\n/g, '<br>')}</div>
+                    </div>
+                    
+                    <button class="read-more-btn text-secondary font-bold text-xs mt-2 hover:underline flex items-center gap-1 transition-all">
+                        <span>Ler mais...</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+            `;
+
+            // Lógica para expandir o conteúdo
+            const btn = div.querySelector('.read-more-btn');
+            const target = div.querySelector('.hidden-content');
+            btn.onclick = () => {
+                target.classList.remove('hidden');
+                btn.remove();
+                // Scroll para garantir que o conteúdo novo seja visto
+                chatMessagesContainer.scrollTo({
+                    top: chatMessagesContainer.scrollHeight,
+                    behavior: 'smooth'
+                });
+            };
+        } else {
+            // Mensagem curta (parágrafo único)
+            div.innerHTML = `
+                <div class="bg-white border border-gray-100 text-gray-800 rounded-2xl rounded-tl-none py-3 px-4 text-sm shadow-sm max-w-[85%]">
+                    <p class="font-serif font-bold text-gray-900 mb-1">Consultoria AI ✨</p>
+                    <div class="leading-relaxed">${content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+        }
+    } else {
+        div.innerHTML = `
+            <div class="bg-primary text-white rounded-2xl rounded-tr-none py-3 px-4 text-sm shadow-card max-w-[85%]">
+                <p class="leading-relaxed">${content}</p>
+            </div>
+        `;
+    }
+
+    chatMessagesContainer.appendChild(div);
+
+    // Scroll suave para o final
+    chatMessagesContainer.scrollTo({
+        top: chatMessagesContainer.scrollHeight,
+        behavior: 'smooth'
+    });
+}
+
 async function sendChatMessage() {
     const text = chatInput.value.trim();
     if (!text) return;
-    const div = document.createElement('div'); div.className = 'flex justify-end mb-2';
-    div.innerHTML = `<div class="bg-primary text-white rounded-xl p-3 text-sm">${text}</div>`;
-    document.getElementById('chat-messages').appendChild(div);
+
+    addChatMessage(text, 'user');
     chatInput.value = '';
+
     try {
-        const res = await fetch(chatWebhookUrl, { method: 'POST', body: JSON.stringify({ message: text }) });
+        const res = await fetch(chatWebhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text })
+        });
         const data = await res.json();
-        const divR = document.createElement('div'); divR.className = 'flex justify-start mb-2';
-        divR.innerHTML = `<div class="bg-white border rounded-xl p-3 text-sm">${data.text || "Ok!"}</div>`;
-        document.getElementById('chat-messages').appendChild(divR);
-    } catch (e) { }
+        addChatMessage(data.text || "Ok!", 'ai', true);
+    } catch (e) {
+        console.error("Erro no chat:", e);
+        addChatMessage("Desculpe, tive um problema ao processar sua mensagem. Tente novamente em instantes.", 'ai', true);
+    }
 }
 sendChatBtn && (sendChatBtn.onclick = sendChatMessage);
 
