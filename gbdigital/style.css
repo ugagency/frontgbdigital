@@ -23,6 +23,31 @@ body {
 }
 
 /* Fix for iOS auto-zoom on focus - input font size must be at least 16px */
+@media screen and (max-width: 1024px) {
+
+    /* Scale up base fonts for better readability on tablets & smartphones */
+    html {
+        font-size: 110%;
+    }
+
+    /* Target specific small Tailwind classes to make them legible */
+    .text-\[8px\] {
+        font-size: 11px !important;
+    }
+
+    .text-\[10px\] {
+        font-size: 13px !important;
+    }
+
+    .text-xs {
+        font-size: 14px !important;
+    }
+
+    .text-sm {
+        font-size: 16px !important;
+    }
+}
+
 @media screen and (max-width: 768px) {
 
     input,
