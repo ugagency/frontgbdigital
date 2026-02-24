@@ -138,22 +138,42 @@ function confirmWheelSelection() {
     const f = getCenterValue('wheel-formalidade');
     const e = getCenterValue('wheel-estilo');
 
-    currentWheelSelection.contexto = ctx;
-    currentWheelSelection.momento = m;
-    currentWheelSelection.clima = c;
-    currentWheelSelection.formalidade = f;
-    currentWheelSelection.estilo = e;
-
-    if (summaryContexto) summaryContexto.innerText = ctx;
-
-    if (summaryMomento) summaryMomento.innerText = m;
-    if (summaryClima) summaryClima.innerText = c;
-    if (summaryFormalidade) summaryFormalidade.innerText = f;
-    if (summaryEstilo) summaryEstilo.innerText = e;
-
+    saveFormState();
     closeWheelPicker();
     updateGenerateState();
 }
+
+// --- PERSISTÊNCIA DE ESTADO ---
+function saveFormState() {
+    const state = {
+        wheel: currentWheelSelection,
+        fileRefName: fileRefName?.textContent,
+        lastGenTime: localStorage.getItem('last_gen_attempt')
+    };
+    localStorage.setItem('ailooks_form_state', JSON.stringify(state));
+}
+
+function loadFormState() {
+    const saved = localStorage.getItem('ailooks_form_state');
+    if (!saved) return;
+    try {
+        const state = JSON.parse(saved);
+        Object.assign(currentWheelSelection, state.wheel);
+        if (summaryContexto) summaryContexto.innerText = currentWheelSelection.contexto;
+        if (summaryMomento) summaryMomento.innerText = currentWheelSelection.momento;
+        if (summaryClima) summaryClima.innerText = currentWheelSelection.clima;
+        if (summaryFormalidade) summaryFormalidade.innerText = currentWheelSelection.formalidade;
+        if (summaryEstilo) summaryEstilo.innerText = currentWheelSelection.estilo;
+        if (fileRefName && state.fileRefName) fileRefName.textContent = state.fileRefName;
+    } catch (e) { console.error("Erro ao carregar estado salvo", e); }
+}
+
+// Aviso ao sair se estiver gerando
+window.onbeforeunload = function () {
+    if (loadingOverlay && !loadingOverlay.classList.contains('hidden')) {
+        return "Sua geração está em andamento. Se sair agora, poderá perder o resultado.";
+    }
+};
 function updateVisuals(el) {
     const center = el.scrollTop + el.offsetHeight / 2;
     Array.from(el.querySelectorAll('.wheel-item')).forEach(child => {
@@ -623,6 +643,7 @@ async function sendGenerate() {
     if (auth.isAnonymous && parseInt(localStorage.getItem('anon_gen_count') || '0') >= ANON_LIMIT) return document.getElementById('limitModal')?.classList.remove('hidden');
 
     try {
+        localStorage.setItem('last_gen_attempt', Date.now().toString());
         loadingOverlay?.classList.remove('hidden');
         loadingOverlay?.classList.add('flex');
 
@@ -834,13 +855,44 @@ async function sendChatMessage() {
 }
 sendChatBtn && (sendChatBtn.onclick = sendChatMessage);
 
-window.addEventListener('auth:change', () => {
-    window.getAuthState().then(auth => {
-        if (!auth.isAnonymous) { loadAvatars(); loadWardrobe(); }
-        const counter = document.getElementById('anonymousCounter');
-        if (counter) counter.classList.toggle('hidden', !auth.isAnonymous);
-    });
+// Recuperar última geração se for recente (< 5 min)
+async function recoverLatestGeneration() {
+    const auth = await window.getAuthState();
+    if (!auth.session) return;
+
+    const { data } = await window.supabaseClient
+        .from('user_history')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+    if (data && data.length > 0) {
+        const lastItem = data[0];
+        const lastTime = new Date(lastItem.created_at).getTime();
+        const now = Date.now();
+
+        // Se a geração foi nos últimos 5 minutos, exibe no topo
+        if (now - lastTime < 5 * 60 * 1000) {
+            resultImage.src = lastItem.image_url;
+            downloadBtn.href = lastItem.image_url;
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+}
+
+window.addEventListener('auth:change', (e) => {
+    const { isAnonymous, session } = e.detail;
+    if (!isAnonymous && session) {
+        loadAvatars();
+        loadWardrobe();
+        recoverLatestGeneration();
+    }
+    const counter = document.getElementById('anonymousCounter');
+    if (counter) counter.classList.toggle('hidden', !isAnonymous);
 });
+
+loadFormState();
 updateGenerateState();
 
 // Inicialização de Modelos (Usando caminhos relativos na pasta manequins/)
