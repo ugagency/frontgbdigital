@@ -222,7 +222,8 @@ async function loadFullWardrobe() {
             </div>`;
         div.onclick = (e) => {
             if (e.target.closest('.delete-full-btn')) { deleteWardrobeItem(item.id, item.image_url, true); return; }
-            fileRef = item.image_url; previewRef.src = item.image_url; previewRef.classList.remove('hidden'); if (iconRef) iconRef.classList.add('hidden'); removeRef.classList.remove('hidden'); if (fileRefName) fileRefName.textContent = "Peça do Closet"; updateGenerateState(); wardrobeFullView.classList.add('hidden'); switchTab('wardrobe', 'saved');
+            fileRef = item.image_url; previewRef.src = item.image_url; previewRef.classList.remove('hidden'); if (iconRef) iconRef.classList.add('hidden'); removeRef.classList.remove('hidden'); if (fileRefName) fileRefName.textContent = "Peça do Closet"; updateGenerateState(); wardrobeFullView.classList.add('hidden');
+            switchTab('wardrobe', 'upload');
         };
         fullWardrobeGrid.appendChild(div);
     });
@@ -260,7 +261,8 @@ async function loadFullAvatars() {
             </div>`;
         div.onclick = (e) => {
             if (e.target.closest('.delete-full-btn')) { deleteAvatar(item.id, item.image_url, true); return; }
-            fileMain = item.image_url; previewMain.src = item.image_url; previewMain.classList.remove('hidden'); if (placeholderMain) placeholderMain.classList.add('hidden'); removeMain.classList.remove('hidden'); updateGenerateState(); avatarFullView.classList.add('hidden'); switchTab('avatar', 'saved');
+            fileMain = item.image_url; previewMain.src = item.image_url; previewMain.classList.remove('hidden'); if (placeholderMain) placeholderMain.classList.add('hidden'); removeMain.classList.remove('hidden'); updateGenerateState(); avatarFullView.classList.add('hidden');
+            switchTab('avatar', 'upload');
         };
         fullAvatarGrid.appendChild(div);
     });
@@ -383,6 +385,7 @@ async function setManequin(key) {
         removeMain?.classList.remove('hidden');
         saveAvatarBtn?.classList.add('hidden'); // Não salva manequim genérico nos avatares
         updateGenerateState();
+        switchTab('avatar', 'upload');
     } catch (e) {
         console.error("Erro ao carregar manequim:", e);
         showAlert("Erro ao carregar o manequim selecionado.");
@@ -529,6 +532,7 @@ async function loadAvatars() {
         div.onclick = (e) => {
             if (e.target.closest('.delete-btn')) { deleteAvatar(item.id, item.image_url); return; }
             fileMain = item.image_url; previewMain.src = item.image_url; previewMain.classList.remove('hidden'); placeholderMain?.classList.add('hidden'); removeMain?.classList.remove('hidden'); updateGenerateState();
+            switchTab('avatar', 'upload');
         };
         avatarGallery.appendChild(div);
     });
@@ -546,6 +550,7 @@ async function loadWardrobe() {
         div.onclick = (e) => {
             if (e.target.closest('.delete-btn')) { deleteWardrobeItem(item.id, item.image_url); return; }
             fileRef = item.image_url; previewRef.src = item.image_url; previewRef.classList.remove('hidden'); iconRef?.classList.add('hidden'); removeRef?.classList.remove('hidden'); if (fileRefName) fileRefName.textContent = "Peça Salva"; updateGenerateState();
+            switchTab('wardrobe', 'upload');
         };
         wardrobeGallery.appendChild(div);
     });
