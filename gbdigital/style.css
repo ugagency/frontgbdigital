@@ -5,13 +5,13 @@
 
 html,
 body {
-    overflow-x: hidden;
+    overflow-x: hidden !important;
     width: 100%;
+    max-width: 100%;
     margin: 0;
     padding: 0;
     position: relative;
     -webkit-text-size-adjust: 100%;
-    /* Prevent font-size changes after orientation change on iOS */
 }
 
 body {
@@ -31,21 +31,53 @@ body {
         font-size: 16px !important;
     }
 
-    /* Ensure the main container is truly centered and doesn't allow overflow */
     #appContent {
-        overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block;
+        margin: 0;
+        padding: 0;
     }
 
     .max-w-4xl {
         width: 100% !important;
+        max-width: 100% !important;
         margin: 0 auto !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        box-sizing: border-box !important;
     }
+
+    /* Global image fix for mobile */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Ensure no wide elements break the flow */
+    section,
+    div,
+    header,
+    footer,
+    main {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden;
+        /* Prevent internal overflow from pushing parent */
+    }
+
+    /* Exceptions for elements that MUST scroll horizontally */
+    #ai-selectors-summary>div,
+    .overflow-x-auto {
+        overflow-x: auto !important;
+    }
+}
+
+/* Chat Message Break-word Fix */
+#chat-messages div {
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 img {
