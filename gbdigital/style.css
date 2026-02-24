@@ -1,12 +1,56 @@
-/* style.css - Design System Editorial */
+/* 1. Global Reset & Layout Fixes */
+* {
+    box-sizing: border-box;
+}
 
-/* 1. Textura de Fundo (Papel de Revista) */
+html,
+body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    -webkit-text-size-adjust: 100%;
+    /* Prevent font-size changes after orientation change on iOS */
+}
+
 body {
     /* Cria um padrão de pontos sutil estilo "grid de design" */
     background-image: radial-gradient(#E5E5E5 1px, transparent 1px);
     background-size: 24px 24px;
     background-attachment: fixed;
     /* O fundo não se move ao rolar */
+}
+
+/* Fix for iOS auto-zoom on focus - input font size must be at least 16px */
+@media screen and (max-width: 768px) {
+
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+
+    /* Ensure the main container is truly centered and doesn't allow overflow */
+    #appContent {
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .max-w-4xl {
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 /* 2. Utilitários de Interface */
@@ -247,6 +291,7 @@ body {
         justify-content: space-around;
         padding: 0.4rem;
     }
+
     .nav-item {
         width: 3rem;
         height: 3rem;
