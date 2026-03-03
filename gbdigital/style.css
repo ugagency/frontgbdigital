@@ -252,6 +252,7 @@ img {
 .wheel-item {
     transition: transform 0.2s, opacity 0.2s;
     transform-style: preserve-3d;
+    scroll-snap-stop: always;
 }
 
 /* Garante que o modal se adapte a telas maiores */

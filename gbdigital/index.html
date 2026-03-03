@@ -510,11 +510,6 @@
                     class="bg-bg border-2 border-transparent hover:border-secondary/30 rounded-xl p-4 cursor-pointer transition-all flex items-center justify-between group w-full overflow-hidden">
                     <div class="flex-1 flex gap-4 overflow-x-auto no-scrollbar scroll-smooth min-w-0">
                       <div class="text-center min-w-[50px]">
-                        <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Contexto</p>
-                        <p id="summary-contexto" class="text-xs font-bold text-primary">Jantar</p>
-                      </div>
-                      <div class="w-[1px] h-8 bg-gray-200"></div>
-                      <div class="text-center min-w-[50px]">
                         <p class="text-[8px] uppercase text-muted font-bold tracking-widest mb-1">Momento</p>
                         <p id="summary-momento" class="text-xs font-bold text-primary">Dia</p>
                       </div>
@@ -566,34 +561,13 @@
                           class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-10 border-y border-gray-100 bg-gray-50/50 pointer-events-none">
                         </div>
 
-                        <!-- Rolete Contexto -->
-                        <div
-                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20"
-                          id="wheel-contexto">
-                          <div class="h-20 shrink-0"></div>
-                          <div
-                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
-                            data-val="Jantar">Jantar</div>
-                          <div
-                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
-                            data-val="Trabalho">Trabalho</div>
-                          <div
-                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
-                            data-val="Evento Formal">Evento Formal</div>
-                          <div
-                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
-                            data-val="Praia">Praia</div>
-                          <div
-                            class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
-                            data-val="Casual">Casual</div>
-                          <div class="h-20 shrink-0"></div>
-                        </div>
+
 
                         <!-- Rolete Momento -->
                         <div
-                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20 bg-gray-50/20"
+                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory bg-gray-50/20"
                           id="wheel-momento">
-                          <div class="h-20 shrink-0"></div> <!-- Padding superior maior -->
+                          <div class="h-[72px] shrink-0"></div>
                           <div
                             class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 transition-all wheel-item"
                             data-val="Dia">Dia</div>
@@ -603,14 +577,14 @@
                           <div
                             class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 transition-all wheel-item"
                             data-val="Noite">Noite</div>
-                          <div class="h-20 shrink-0"></div> <!-- Padding inferior maior -->
+                          <div class="h-[72px] shrink-0"></div>
                         </div>
 
                         <!-- Rolete Clima -->
                         <div
-                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20"
+                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory"
                           id="wheel-clima">
-                          <div class="h-20 shrink-0"></div>
+                          <div class="h-[72px] shrink-0"></div>
                           <div
                             class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
                             data-val="Calor">Calor</div>
@@ -620,14 +594,14 @@
                           <div
                             class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
                             data-val="Ameno">Ameno</div>
-                          <div class="h-20 shrink-0"></div>
+                          <div class="h-[72px] shrink-0"></div>
                         </div>
 
                         <!-- Rolete Formalidade -->
                         <div
-                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20 bg-gray-50/20"
+                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory bg-gray-50/20"
                           id="wheel-formalidade">
-                          <div class="h-20 shrink-0"></div>
+                          <div class="h-[72px] shrink-0"></div>
                           <div
                             class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
                             data-val="1">1</div>
@@ -637,14 +611,14 @@
                           <div
                             class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
                             data-val="3">3</div>
-                          <div class="h-20 shrink-0"></div>
+                          <div class="h-[72px] shrink-0"></div>
                         </div>
 
                         <!-- Rolete Estilo -->
                         <div
-                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory py-20"
+                          class="flex-1 flex flex-col items-center overflow-y-auto no-scrollbar snap-y snap-mandatory"
                           id="wheel-estilo">
-                          <div class="h-20 shrink-0"></div>
+                          <div class="h-[72px] shrink-0"></div>
                           <div
                             class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
                             data-val="Old Money">Old Money</div>
@@ -654,7 +628,7 @@
                           <div
                             class="snap-center h-12 flex items-center justify-center text-[10px] text-primary font-bold shrink-0 wheel-item"
                             data-val="Athleisure">Athleisure</div>
-                          <div class="h-20 shrink-0"></div>
+                          <div class="h-[72px] shrink-0"></div>
                         </div>
                       </div>
                     </div>

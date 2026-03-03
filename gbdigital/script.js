@@ -105,13 +105,12 @@ const summaryClima = document.getElementById('summary-clima');
 const summaryFormalidade = document.getElementById('summary-formalidade');
 const summaryEstilo = document.getElementById('summary-estilo');
 
-const currentWheelSelection = { contexto: 'Jantar', momento: 'Dia', clima: 'Calor', formalidade: '1', estilo: 'Old Money' };
+const currentWheelSelection = { momento: 'Dia', clima: 'Calor', formalidade: '1', estilo: 'Old Money' };
 
 function openWheelPicker() {
     if (!wheelModal) return;
     wheelModal.classList.remove('hidden');
     // Sincronizar roletes com estado atual ao abrir
-    syncWheel('wheel-contexto', currentWheelSelection.contexto);
     syncWheel('wheel-momento', currentWheelSelection.momento);
     syncWheel('wheel-clima', currentWheelSelection.clima);
     syncWheel('wheel-formalidade', currentWheelSelection.formalidade);
@@ -132,16 +131,32 @@ function syncWheel(id, val) {
 }
 
 function confirmWheelSelection() {
-    const ctx = getCenterValue('wheel-contexto');
     const m = getCenterValue('wheel-momento');
     const c = getCenterValue('wheel-clima');
     const f = getCenterValue('wheel-formalidade');
     const e = getCenterValue('wheel-estilo');
 
+    if (m) currentWheelSelection.momento = m;
+    if (c) currentWheelSelection.clima = c;
+    if (f) currentWheelSelection.formalidade = f;
+    if (e) currentWheelSelection.estilo = e;
+
+    // Atualizar os resumos na interface
+    if (summaryMomento) summaryMomento.innerText = currentWheelSelection.momento;
+    if (summaryClima) summaryClima.innerText = currentWheelSelection.clima;
+    if (summaryFormalidade) summaryFormalidade.innerText = currentWheelSelection.formalidade;
+    if (summaryEstilo) summaryEstilo.innerText = currentWheelSelection.estilo;
+
     saveFormState();
     closeWheelPicker();
     updateGenerateState();
 }
+
+window.openWheelPicker = openWheelPicker;
+window.closeWheelPicker = closeWheelPicker;
+window.confirmWheelSelection = confirmWheelSelection;
+window.filterManequin = filterManequin;
+window.setManequin = setManequin;
 
 // --- PERSISTÊNCIA DE ESTADO ---
 function saveFormState() {
@@ -159,7 +174,6 @@ function loadFormState() {
     try {
         const state = JSON.parse(saved);
         Object.assign(currentWheelSelection, state.wheel);
-        if (summaryContexto) summaryContexto.innerText = currentWheelSelection.contexto;
         if (summaryMomento) summaryMomento.innerText = currentWheelSelection.momento;
         if (summaryClima) summaryClima.innerText = currentWheelSelection.clima;
         if (summaryFormalidade) summaryFormalidade.innerText = currentWheelSelection.formalidade;
@@ -205,7 +219,7 @@ function getCenterValue(id) {
 }
 
 // Adicionar ouvintes de scroll para efeito visual em tempo real
-['wheel-contexto', 'wheel-momento', 'wheel-clima', 'wheel-formalidade', 'wheel-estilo'].forEach(id => {
+['wheel-momento', 'wheel-clima', 'wheel-formalidade', 'wheel-estilo'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.onscroll = () => updateVisuals(el);
 });
@@ -649,7 +663,7 @@ async function sendGenerate() {
 
         // Constrói prompt final a partir dos seletores do rolete e opção de armário
         const prioritizeStatus = 'on'; // Fixado como ON conforme solicitado
-        const finalPrompt = `Modo: Gerar Look, Contexto: ${currentWheelSelection.contexto}, Momento: ${currentWheelSelection.momento}, Clima: ${currentWheelSelection.clima}, Nível de Formalidade: ${currentWheelSelection.formalidade}, Estilo: ${currentWheelSelection.estilo}, Priorizar meu armário: ${prioritizeStatus}`;
+        const finalPrompt = `Modo: Gerar Look, Momento: ${currentWheelSelection.momento}, Clima: ${currentWheelSelection.clima}, Nível de Formalidade: ${currentWheelSelection.formalidade}, Estilo: ${currentWheelSelection.estilo}, Priorizar meu armário: ${prioritizeStatus}`;
 
         const fd = new FormData();
         fd.append('image_base', await (async () => { if (typeof fileMain === 'string') { const r = await fetch(fileMain); return await r.blob(); } return fileMain; })(), 'image_base.png');
