@@ -19,8 +19,17 @@ const promptEl = document.getElementById('prompt');
 const loadingOverlay = document.getElementById('loadingOverlay');
 const resultSection = document.getElementById('resultSection');
 const resultImage = document.getElementById('resultImage');
+const carouselTrack = document.getElementById('carouselTrack');
+const carouselControls = document.getElementById('carouselControls');
+const carouselIndicators = document.getElementById('carouselIndicators');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 const downloadBtn = document.getElementById('downloadBtn');
 const regenerateBtn = document.getElementById('regenerateBtn');
+
+// Estado do Carrossel
+let currentCarouselIndex = 0;
+let carouselImages = [];
 
 // Elementos Phase 2 & 3 (Guarda-Roupa & Avatar)
 const saveAvatarBtn = document.getElementById('saveAvatarBtn');
@@ -691,45 +700,66 @@ async function sendGenerate() {
             if (contentType.toLowerCase().includes("application/json")) {
                 console.log("Iniciando processamento JSON...");
                 const data = await res.json();
-                const item = Array.isArray(data) ? data[0] : data;
-                const edited = item.edited || item.Edited;
-                const justificativa = item.justificativa || item.Justificativa;
 
-                // Chat em bloco isolado para não quebrar a imagem
-                try {
+                // Converter para array se não for
+                const items = Array.isArray(data) ? data : [data];
+                carouselImages = [];
+
+                for (const item of items) {
+                    const edited = item.edited || item.Edited;
+                    const justificativa = item.justificativa || item.Justificativa;
+
                     if (justificativa) {
-                        console.log("Justificativa no JSON encontrada.");
                         addChatMessage(justificativa, 'ai', true);
                     }
-                } catch (chatErr) { console.error("Erro ao adicionar chat (JSON):", chatErr); }
 
-                if (edited) {
-                    finalUrl = edited.startsWith('http') || edited.startsWith('data:') ? edited : `data:image/png;base64,${edited}`;
-                    resultImage.src = finalUrl;
-                    downloadBtn.href = finalUrl;
-                    console.log("Imagem configurada a partir de JSON.");
-                    const r = await fetch(finalUrl);
-                    blob = await r.blob();
+                    if (edited) {
+                        const imgUrl = edited.startsWith('http') || edited.startsWith('data:') ? edited : `data:image/png;base64,${edited}`;
+                        carouselImages.push(imgUrl);
+                    }
+                }
+
+                if (carouselImages.length > 0) {
+                    renderCarousel(carouselImages);
+                    // Salvar no histórico (apenas a primeira se houver limitação de banco, ou todas se preferir)
+                    if (!auth.isAnonymous && auth.session) {
+                        for (const imgUrl of carouselImages) {
+                            try {
+                                const r = await fetch(imgUrl);
+                                const b = await r.blob();
+                                const historyUrl = await uploadToSupabase(b, 'history');
+                                await window.supabaseClient.from('user_history').insert([{
+                                    user_id: auth.session.user.id,
+                                    prompt: promptEl?.value || 'Geração via IA',
+                                    image_url: historyUrl
+                                }]);
+                            } catch (hErr) { console.error("Erro ao salvar no histórico:", hErr); }
+                        }
+                    }
                 }
             } else {
                 console.log("Iniciando processamento BINÁRIO...");
-                // Headers em bloco isolado
-                try {
-                    const hJust = res.headers.get("x-justificativa") || res.headers.get("justificativa");
-                    if (hJust) {
-                        const decoded = decodeURIComponent(hJust.replace(/\+/g, ' '));
-                        addChatMessage(decoded, 'ai', true);
-                    }
-                } catch (headerErr) { console.error("Erro nos headers/chat (Binário):", headerErr); }
+                const hJust = res.headers.get("x-justificativa") || res.headers.get("justificativa");
+                if (hJust) {
+                    const decoded = decodeURIComponent(hJust.replace(/\+/g, ' '));
+                    addChatMessage(decoded, 'ai', true);
+                }
 
-                blob = await res.blob();
-                console.log("Blob binário pronto, tamanho:", blob.size);
+                const blob = await res.blob();
                 if (blob.size === 0) throw new Error("A IA retornou um arquivo vazio.");
 
-                finalUrl = URL.createObjectURL(blob);
-                resultImage.src = finalUrl;
-                downloadBtn.href = finalUrl;
-                console.log("Imagem configurada a partir de Blob binário.");
+                const finalUrl = URL.createObjectURL(blob);
+                carouselImages = [finalUrl];
+                renderCarousel(carouselImages);
+
+                if (!auth.isAnonymous && auth.session) {
+                    const historyUrl = await uploadToSupabase(blob, 'history');
+                    await window.supabaseClient.from('user_history').insert([{
+                        user_id: auth.session.user.id,
+                        prompt: promptEl?.value || 'Geração via IA',
+                        image_url: historyUrl
+                    }]);
+                }
             }
         } catch (err) {
             console.error("Erro crítico no processamento da resposta:", err);
@@ -763,6 +793,69 @@ async function sendGenerate() {
         updateGenerateState();
     }
 }
+function renderCarousel(images) {
+    if (!carouselTrack || images.length === 0) return;
+
+    // Limpar carrossel
+    carouselTrack.innerHTML = '';
+    carouselIndicators.innerHTML = '';
+    currentCarouselIndex = 0;
+
+    images.forEach((imgUrl, index) => {
+        // Slide
+        const slide = document.createElement('div');
+        slide.className = 'min-w-full flex-shrink-0 flex justify-center items-center p-2 md:p-4';
+        slide.innerHTML = `<img src="${imgUrl}" class="w-full h-auto object-contain max-h-[700px] md:max-h-[800px] rounded-xl shadow-lg" />`;
+        carouselTrack.appendChild(slide);
+
+
+        // Dot
+        const dot = document.createElement('button');
+        dot.className = `w-2 h-2 rounded-full transition-all ${index === 0 ? 'bg-secondary w-4' : 'bg-gray-300'}`;
+        dot.onclick = () => goToSlide(index);
+        carouselIndicators.appendChild(dot);
+    });
+
+    // Mostrar controles apenas se houver mais de uma imagem
+    carouselControls.classList.toggle('hidden', images.length <= 1);
+
+    updateCarousel();
+    resultSection.classList.remove('hidden');
+    resultSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+function updateCarousel() {
+    carouselTrack.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
+
+    // Atualizar dots
+    const dots = carouselIndicators.querySelectorAll('button');
+    dots.forEach((dot, index) => {
+        if (index === currentCarouselIndex) {
+            dot.className = 'w-2 h-2 rounded-full bg-secondary w-4 transition-all';
+        } else {
+            dot.className = 'w-2 h-2 rounded-full bg-gray-300 transition-all';
+        }
+    });
+
+    // Atualizar link de download para a imagem atual
+    downloadBtn.href = carouselImages[currentCarouselIndex];
+}
+
+function goToSlide(index) {
+    currentCarouselIndex = index;
+    updateCarousel();
+}
+
+if (prevBtn) prevBtn.onclick = () => {
+    currentCarouselIndex = (currentCarouselIndex > 0) ? currentCarouselIndex - 1 : carouselImages.length - 1;
+    updateCarousel();
+};
+
+if (nextBtn) nextBtn.onclick = () => {
+    currentCarouselIndex = (currentCarouselIndex < carouselImages.length - 1) ? currentCarouselIndex + 1 : 0;
+    updateCarousel();
+};
+
 generateBtn && (generateBtn.onclick = sendGenerate);
 regenerateBtn && (regenerateBtn.onclick = sendGenerate);
 
@@ -871,14 +964,11 @@ sendChatBtn && (sendChatBtn.onclick = sendChatMessage);
 
 // Recuperar última geração se for recente (< 5 min)
 async function recoverLatestGeneration() {
-    const auth = await window.getAuthState();
-    if (!auth.session) return;
-
     const { data } = await window.supabaseClient
         .from('user_history')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(1);
+        .limit(10);
 
     if (data && data.length > 0) {
         const lastItem = data[0];
@@ -887,10 +977,16 @@ async function recoverLatestGeneration() {
 
         // Se a geração foi nos últimos 5 minutos, exibe no topo
         if (now - lastTime < 5 * 60 * 1000) {
-            resultImage.src = lastItem.image_url;
-            downloadBtn.href = lastItem.image_url;
-            resultSection.classList.remove('hidden');
-            resultSection.scrollIntoView({ behavior: 'smooth' });
+            // Agrupar imagens que foram criadas num intervalo de 10 segundos (mesma leva)
+            const sameGenerationImages = data
+                .filter(item => {
+                    const diff = Math.abs(new Date(item.created_at).getTime() - lastTime);
+                    return diff < 10000; // 10 segundos
+                })
+                .map(item => item.image_url);
+
+            carouselImages = sameGenerationImages;
+            renderCarousel(carouselImages);
         }
     }
 }

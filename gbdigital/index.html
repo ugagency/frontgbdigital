@@ -209,7 +209,7 @@
     <!-- Header -->
     <header class="p-6 border-b flex items-center justify-between bg-white sticky top-0 z-10">
       <div>
-        <h2 class="font-serif text-2xl font-bold text-primary">Meus Bonecos</h2>
+        <h2 class="font-serif text-2xl font-bold text-primary">Minhas imagens</h2>
         <p class="text-[10px] text-muted uppercase tracking-[0.2em] mt-1">Gerencie seus avatares personalizados</p>
       </div>
       <div class="flex items-center gap-3">
@@ -355,8 +355,8 @@
                     class="flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-primary border-b-2 border-primary">Upload
                     Novo</button>
                   <button id="tab-avatar-saved"
-                    class="flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent">Meus
-                    Bonecos</button>
+                    class="flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent">Minhas
+                    imagens</button>
                   <button id="tab-avatar-manequin"
                     class="flex-1 pb-2 text-[8px] md:text-xs font-bold uppercase tracking-wider text-muted border-b-2 border-transparent">Manequim
                     Pronto</button>
@@ -798,11 +798,41 @@
               com Sucesso</span>
           </div>
           <div class="rounded-2xl overflow-hidden bg-gray-100 mb-6 relative group shadow-inner">
-            <img id="resultImage" src="" class="w-full h-auto object-contain max-h-[800px] mx-auto" />
-          </div>
+            <!-- Carousel Container -->
+            <div id="carouselTrack" class="flex transition-transform duration-500 ease-in-out">
+              <!-- As imagens serão inseridas dinamicamente aqui -->
+              <div class="min-w-full flex justify-center items-center p-4">
+                <img id="resultImage" src="" class="w-full h-auto object-contain max-h-[800px] rounded-xl" />
+              </div>
+            </div>
+
+            <!-- Carousel Controls -->
+            <div id="carouselControls" class="hidden">
+              <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+
+              <!-- Indicator Dots -->
+              <div id="carouselIndicators" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                <!-- Dots dinâmicos -->
+              </div> <!-- Fim de carouselIndicators -->
+            </div> <!-- Fim de carouselControls -->
+          </div> <!-- Fim do container de overflow (linha 800) -->
+
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a id="downloadBtn" download
               class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white rounded-xl font-medium hover:bg-black transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
                   d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
