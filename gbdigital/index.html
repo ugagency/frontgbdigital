@@ -797,49 +797,12 @@
               class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wide">Gerado
               com Sucesso</span>
           </div>
-          <div class="rounded-2xl overflow-hidden bg-gray-100 mb-6 relative group shadow-inner">
-            <!-- Carousel Container -->
-            <div id="carouselTrack" class="flex transition-transform duration-500 ease-in-out">
-              <!-- As imagens serão inseridas dinamicamente aqui -->
-              <div class="min-w-full flex justify-center items-center p-4">
-                <img id="resultImage" src="" class="w-full h-auto object-contain max-h-[800px] rounded-xl" />
-              </div>
-            </div>
-
-            <!-- Carousel Controls -->
-            <div id="carouselControls" class="hidden">
-              <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg z-20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full shadow-lg z-20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-
-
-              <!-- Indicator Dots -->
-              <div id="carouselIndicators" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-                <!-- Dots dinâmicos -->
-              </div> <!-- Fim de carouselIndicators -->
-            </div> <!-- Fim de carouselControls -->
-          </div> <!-- Fim do container de overflow (linha 800) -->
+          <!-- Result Grid: as imagens geradas aparecem lado a lado -->
+          <div id="resultGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <!-- Cards inseridos dinamicamente aqui -->
+          </div>
 
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a id="downloadBtn" download
-              class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white rounded-xl font-medium hover:bg-black transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                  d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                  clip-rule="evenodd" />
-              </svg>
-              Baixar Imagem
-            </a>
             <button id="regenerateBtn"
               class="inline-flex items-center justify-center px-8 py-3 bg-white border border-gray-200 text-primary rounded-xl font-medium hover:bg-gray-50 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
@@ -870,6 +833,36 @@
       </div>
     </div>
 
+    <!-- Lightbox: visualização ampliada de uma imagem gerada -->
+    <div id="imageLightbox" class="fixed inset-0 bg-black/90 backdrop-blur-sm hidden items-center justify-center z-[100]">
+      <button id="lightboxClose" class="absolute top-4 right-4 text-white p-2 rounded-full hover:bg-white/10 z-10" aria-label="Fechar">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <button id="lightboxPrev" class="absolute left-4 top-1/2 -translate-y-1/2 text-white p-2 rounded-full bg-white/10 hover:bg-white/20 z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button id="lightboxNext" class="absolute right-4 top-1/2 -translate-y-1/2 text-white p-2 rounded-full bg-white/10 hover:bg-white/20 z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+      <div class="flex flex-col items-center gap-4 max-w-[92vw] max-h-[90vh]">
+        <img id="lightboxImage" src="" class="max-w-[92vw] max-h-[75vh] object-contain rounded-xl shadow-2xl" />
+        <a id="lightboxDownload" download
+          class="inline-flex items-center justify-center px-6 py-2.5 bg-white text-primary rounded-xl font-medium hover:bg-gray-100 transition-all shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+          Baixar Imagem
+        </a>
+      </div>
+    </div>
 
   </div> <!-- Fim do #appContent -->
 

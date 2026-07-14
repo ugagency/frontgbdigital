@@ -356,42 +356,36 @@ img {
     }
 }
 
-/* --- CAROUSEL STYLES --- */
+/* --- RESULT GRID & LIGHTBOX STYLES --- */
 
-#carouselTrack {
-    will-change: transform;
+#resultGrid > div {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#carouselIndicators button {
-    cursor: pointer;
-    border: none;
-    outline: none;
+#resultGrid > div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-#carouselIndicators button.bg-secondary {
-    transform: scale(1.2);
+#resultGrid img {
+    transition: transform 0.3s ease;
 }
 
-#carouselControls button {
-    opacity: 0.4;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(4px);
-    color: white;
-    transition: all 0.3s ease;
+#resultGrid > div:hover img {
+    transform: scale(1.03);
 }
 
-.group:hover #carouselControls button {
-    opacity: 1;
-    background: rgba(255, 255, 255, 0.8);
-    color: #1A1A1A;
+#imageLightbox {
+    animation: lightboxFadeIn 0.2s ease;
 }
 
-@media (max-width: 768px) {
-    #carouselControls button {
-        opacity: 0.7;
-        background: rgba(255, 255, 255, 0.5);
-        color: #1A1A1A;
-        transform: translateY(-50%) scale(0.9);
+@keyframes lightboxFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
 

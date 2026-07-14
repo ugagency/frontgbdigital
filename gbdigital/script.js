@@ -18,16 +18,16 @@ const resetBtn = document.getElementById('resetBtn');
 const promptEl = document.getElementById('prompt');
 const loadingOverlay = document.getElementById('loadingOverlay');
 const resultSection = document.getElementById('resultSection');
-const resultImage = document.getElementById('resultImage');
-const carouselTrack = document.getElementById('carouselTrack');
-const carouselControls = document.getElementById('carouselControls');
-const carouselIndicators = document.getElementById('carouselIndicators');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const downloadBtn = document.getElementById('downloadBtn');
+const resultGrid = document.getElementById('resultGrid');
 const regenerateBtn = document.getElementById('regenerateBtn');
+const imageLightbox = document.getElementById('imageLightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxDownload = document.getElementById('lightboxDownload');
+const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
 
-// Estado do Carrossel
+// Estado do resultado da geração
 let currentCarouselIndex = 0;
 let carouselImages = [];
 
@@ -720,7 +720,7 @@ async function sendGenerate() {
                 }
 
                 if (carouselImages.length > 0) {
-                    renderCarousel(carouselImages);
+                    renderResultGrid(carouselImages);
                     // Salvar no histórico (apenas a primeira se houver limitação de banco, ou todas se preferir)
                     if (!auth.isAnonymous && auth.session) {
                         for (const imgUrl of carouselImages) {
@@ -750,7 +750,7 @@ async function sendGenerate() {
 
                 const finalUrl = URL.createObjectURL(blob);
                 carouselImages = [finalUrl];
-                renderCarousel(carouselImages);
+                renderResultGrid(carouselImages);
 
                 if (!auth.isAnonymous && auth.session) {
                     const historyUrl = await uploadToSupabase(blob, 'history');
@@ -793,67 +793,64 @@ async function sendGenerate() {
         updateGenerateState();
     }
 }
-function renderCarousel(images) {
-    if (!carouselTrack || images.length === 0) return;
+function renderResultGrid(images) {
+    if (!resultGrid || images.length === 0) return;
 
-    // Limpar carrossel
-    carouselTrack.innerHTML = '';
-    carouselIndicators.innerHTML = '';
-    currentCarouselIndex = 0;
+    resultGrid.innerHTML = '';
 
     images.forEach((imgUrl, index) => {
-        // Slide
-        const slide = document.createElement('div');
-        slide.className = 'min-w-full flex-shrink-0 flex justify-center items-center p-2 md:p-4';
-        slide.innerHTML = `<img src="${imgUrl}" class="w-full h-auto object-contain max-h-[700px] md:max-h-[800px] rounded-xl shadow-lg" />`;
-        carouselTrack.appendChild(slide);
-
-
-        // Dot
-        const dot = document.createElement('button');
-        dot.className = `w-2 h-2 rounded-full transition-all ${index === 0 ? 'bg-secondary w-4' : 'bg-gray-300'}`;
-        dot.onclick = () => goToSlide(index);
-        carouselIndicators.appendChild(dot);
+        const card = document.createElement('div');
+        card.className = 'relative group rounded-2xl overflow-hidden bg-gray-100 shadow-inner cursor-pointer';
+        card.innerHTML = `
+            <img src="${imgUrl}" class="w-full h-auto object-contain max-h-[420px] rounded-2xl" />
+            <a href="${imgUrl}" download
+                class="absolute top-2 right-2 p-2 bg-white/90 rounded-full shadow-lg opacity-90 hover:opacity-100 transition-opacity z-10"
+                title="Baixar imagem" onclick="event.stopPropagation()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>`;
+        card.onclick = () => openLightbox(index);
+        resultGrid.appendChild(card);
     });
 
-    // Mostrar controles apenas se houver mais de uma imagem
-    carouselControls.classList.toggle('hidden', images.length <= 1);
-
-    updateCarousel();
     resultSection.classList.remove('hidden');
     resultSection.scrollIntoView({ behavior: 'smooth' });
 }
 
-function updateCarousel() {
-    carouselTrack.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
-
-    // Atualizar dots
-    const dots = carouselIndicators.querySelectorAll('button');
-    dots.forEach((dot, index) => {
-        if (index === currentCarouselIndex) {
-            dot.className = 'w-2 h-2 rounded-full bg-secondary w-4 transition-all';
-        } else {
-            dot.className = 'w-2 h-2 rounded-full bg-gray-300 transition-all';
-        }
-    });
-
-    // Atualizar link de download para a imagem atual
-    downloadBtn.href = carouselImages[currentCarouselIndex];
-}
-
-function goToSlide(index) {
+function openLightbox(index) {
+    if (!imageLightbox || carouselImages.length === 0) return;
     currentCarouselIndex = index;
-    updateCarousel();
+    updateLightbox();
+    imageLightbox.classList.remove('hidden');
+    imageLightbox.classList.add('flex');
 }
 
-if (prevBtn) prevBtn.onclick = () => {
+function closeLightbox() {
+    if (!imageLightbox) return;
+    imageLightbox.classList.add('hidden');
+    imageLightbox.classList.remove('flex');
+}
+
+function updateLightbox() {
+    const imgUrl = carouselImages[currentCarouselIndex];
+    lightboxImage.src = imgUrl;
+    lightboxDownload.href = imgUrl;
+    const hasMultiple = carouselImages.length > 1;
+    lightboxPrev.classList.toggle('hidden', !hasMultiple);
+    lightboxNext.classList.toggle('hidden', !hasMultiple);
+}
+
+if (lightboxClose) lightboxClose.onclick = closeLightbox;
+
+if (lightboxPrev) lightboxPrev.onclick = () => {
     currentCarouselIndex = (currentCarouselIndex > 0) ? currentCarouselIndex - 1 : carouselImages.length - 1;
-    updateCarousel();
+    updateLightbox();
 };
 
-if (nextBtn) nextBtn.onclick = () => {
+if (lightboxNext) lightboxNext.onclick = () => {
     currentCarouselIndex = (currentCarouselIndex < carouselImages.length - 1) ? currentCarouselIndex + 1 : 0;
-    updateCarousel();
+    updateLightbox();
 };
 
 generateBtn && (generateBtn.onclick = sendGenerate);
@@ -986,7 +983,7 @@ async function recoverLatestGeneration() {
                 .map(item => item.image_url);
 
             carouselImages = sameGenerationImages;
-            renderCarousel(carouselImages);
+            renderResultGrid(carouselImages);
         }
     }
 }
